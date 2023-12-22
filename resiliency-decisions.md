@@ -5,13 +5,14 @@ copyright:
 lastupdated: "2023-12-26"
 
 subcollection: pattern-sap-on-powervs
+
 keywords:
 
 ---
 
 {{site.data.keyword.attribute-definition-list}}
 
-# Overview
-{: #overview}
+# Architecture decisions for resiliency
+{: #resiliency-decisions}
 
 text here

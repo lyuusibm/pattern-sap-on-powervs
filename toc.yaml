@@ -4,28 +4,27 @@
 ---
 toc:
   properties:
-    subcollection: <repo-name>
-    industry: industry-value
-    use-case: use-case-value
-    compliance: compliance-value
+    subcollection: pattern-oracle-rac-on-powervs
+    #industry: industry-value
+    #use-case: use-case-value
+    #compliance: compliance-value
     audience: solution
     content-type: deployment
-    href: /docs/<repo-name>
-    path: <repo-name>
-    description: Pattern description
-    label: Pattern name
+    href: /docs/pattern-oracle-rac-on-powervs
+    path: pattern-oracle-rac-on-powervs
+    description: Oracle RAC PowerVS Architecture Pattern
+    label: Oracle RAC on Power Virtual Server
 
   entries:
   - navgroup:
       id: overview
       topics:
       - overview.md
-      - requirements.md
 
   - navgroup:
       id: architecture
       topics:
-      - reference-architecture.md
+      - reference-architecture-oracle-rac-on-powervs.md
 
   - navgroup:
       id: plan
@@ -33,48 +32,33 @@ toc:
       - topicgroup:
           label: Design considerations
           topics:
-          - topic: compute-design.md
+          - topic: compute-considerations.md
             navtitle: Compute
-          - topic: storage-design.md
+          - topic: storage-considerations.md
             navtitle: Storage
-          - topic: networking-design.md
-            navtitle: Networking
-          - topic: security-design.md
+          - topic: network-considerations.md
+            navtitle: Network
+          - topic: security-considerations.md
             navtitle: Security
-          - topic: resiliency-design.md
+          - topic: resiliency-considerations.md
             navtitle: Resiliency
-          - topic: service-management-design.md
-            navtitle: Service management
-          - other-design.md
       - topicgroup:
           label: Architecture decisions
           topics:
-          - topic: compute-architecture.md
+          - topic: compute-decisions.md
             navtitle: Compute
-          - topic: storage-architecture.md
+          - topic: storage-decisions.md
             navtitle: Storage
-          - topic: networking-architecture.md
-            navtitle: Networking
-          - topic: security-architecture.md
+          - topic: network-decisions.md
+            navtitle: Network
+          - topic: security-decisions.md
             navtitle: Security
-          - topic: resiliency-architecture.md
+          - topic: resiliency-decisions.md
             navtitle: Resiliency
-          - topic: service-management-architecture.md
-            navtitle: Service management
-          - other-architecture.md
-
-  - navgroup:
-      id: deploy
-      topics:
-      - topic-7.md
-      - topic-8.md
+          - topic: service-management-decisions.md
+            navtitle: Service Management
 
   - navgroup:
       id: reference
       topics:
       - references.md
-
-  - navgroup:
-      id: help
-      topics:
-      - topic: topic-10.md
