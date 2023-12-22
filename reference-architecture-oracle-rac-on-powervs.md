@@ -38,6 +38,7 @@ text here
 
 ## Design scope
 {: #design-scope}
+
 text here
 
 
@@ -48,3 +49,5 @@ text here
 
 ## Components
 {: #components}
+
+text here
