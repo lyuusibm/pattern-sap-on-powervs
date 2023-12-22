@@ -42,6 +42,8 @@ toc:
             navtitle: Security
           - topic: resiliency-considerations.md
             navtitle: Resiliency
+          - topic: migration-considerations.md
+            navtitle: Migration
       - topicgroup:
           label: Architecture decisions
           topics:
