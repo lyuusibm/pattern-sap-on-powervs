@@ -4,16 +4,16 @@
 ---
 toc:
   properties:
-    subcollection: pattern-oracle-rac-on-powervs
+    subcollection: pattern-sap-on-powervs
     #industry: industry-value
     #use-case: use-case-value
     #compliance: compliance-value
     audience: solution
     content-type: deployment
-    href: /docs/pattern-oracle-rac-on-powervs
-    path: pattern-oracle-rac-on-powervs
-    description: Oracle RAC PowerVS Architecture Pattern
-    label: Oracle RAC on Power Virtual Server
+    href: /docs/pattern-sap-on-powervs
+    path: pattern-sap-on-powervs
+    description: SAP PowerVS Architecture Pattern
+    label: SAP on Power Virtual Server
 
   entries:
   - navgroup:
@@ -24,7 +24,7 @@ toc:
   - navgroup:
       id: architecture
       topics:
-      - reference-architecture-oracle-rac-on-powervs.md
+      - reference-architecture-sap-on-powervs.md
 
   - navgroup:
       id: plan
