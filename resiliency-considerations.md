@@ -40,47 +40,26 @@ Objective (RTO) and SLA requirements.
 
 The table below shows a comparison of the different deployment options.
 
-+-----------------+-------+---------------------+---------------------+
-| Deployment      | Avail | Features            | Recommended Usage   |
-|                 | abili |                     |                     |
-|                 | ty^1^ |                     |                     |
-| Single Zone     | 99.9% | \- Single instance  | \- Low to medium    |
-|                 |       | (single point of    | priority            |
-|                 |       | failure) or         | applications        |
-|                 |       | multiple instances  |                     |
-|                 |       | (protects from      | \- Non-production   |
-|                 |       | infrastructure      | environment         |
-|                 |       | failures)           |                     |
-|                 |       |                     |                     |
-|                 |       | \- Low/Medium cost  |                     |
-| Single Zone;    | 9     | \- Multi-instance   | \- Core business    |
-| Multi Instance  | 9.95% | (protects from      | applications        |
-|                 |       | infrastructure      |                     |
-|                 |       | failures)           | \- Production level |
-|                 |       |                     | environments with   |
-|                 |       |                     | resiliency          |
-|                 |       |                     | requirements not    |
-|                 |       |                     | exceeding 99.95%    |
-| Multi-zone,     | 99.9  | \- Redundant        | \- Core business    |
-| Single Region   | 9%^2^ | resources           | applications        |
-|                 |       |                     |                     |
-|                 |       | \- Protection from  | \- Production level |
-|                 |       | zone outages        | environments with   |
-|                 |       |                     | stringent           |
-|                 |       | \- Medium/high cost | resiliency          |
-|                 |       |                     | requirements        |
-| Multi-zone,     | 9     | \- Protection from  | \- Disaster         |
-| Multi-Region    | 9.99% | region outages      | Recovery            |
-|                 |       |                     |                     |
-|                 |       | \- High cost        | \- Business         |
-|                 |       |                     | continuity policies |
-|                 |       |                     | with cross geo or   |
-|                 |       |                     | cross-country       |
-|                 |       |                     | requirements        |
+| Deployment    | Availability | Description   | Recommended use   |
+|------------------|------------------|------------------|------------------|
+| Single Zone                 | 99.9%           | \- Single instance (single point of failure) or multiple instances (protects from infrastructure failures) | \- Low to medium priority applications                                             |
+|                             |                 |                                                                                                            |                                                                                    |
+|                             |                 | \- Low/Medium cost                                                                                         | \- Non-production environment                                                      |
+| Single Zone; Multi Instance | 99.95%          | \- Multi-instance (protects from infrastructure failures)                                                  | \- Core business applications                                                      |
+|                             |                 |                                                                                                            |                                                                                    |
+|                             |                 |                                                                                                            | \- Production level environments with resiliency requirements not exceeding 99.95% |
+| Multi-zone, Single Region   | 99.99%^2^       | \- Redundant resources                                                                                     | \- Core business applications                                                      |
+|                             |                 |                                                                                                            |                                                                                    |
+|                             |                 | \- Protection from zone outages                                                                            | \- Production level environments with stringent resiliency requirements            |
+|                             |                 |                                                                                                            |                                                                                    |
+|                             |                 | \- Medium/high cost                                                                                        |                                                                                    |
+| Multi-zone, Multi-Region    | 99.99%          | \- Protection from region outages                                                                          | \- Disaster Recovery                                                               |
+|                             |                 |                                                                                                            |                                                                                    |
+|                             |                 | \- High cost                                                                                               | \- Business continuity policies with cross geo or cross-country requirements       |
 {: caption="Table 1. Resiliency options" caption-side="bottom"}
 
 1.  Based on Cloud infrastructure
-    [SLA.](https://www.ibm.com/support/customer/csol/terms/?id=i126-9268&lc=en#detail-document)
+    [SLA](https://www.ibm.com/support/customer/csol/terms/?id=i126-9268&lc=en#detail-document)
     Does not represent application availability
 
 2.  3 or more instances in separate Availability Zones
