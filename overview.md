@@ -17,6 +17,7 @@ keywords:
 > The objective of this document is to provide an IBM Solution Design
 > for the deployment of SAP on IBM Power Virtual Server (PowerVS) to:
 
+
 -   Accelerate and simplify solution design by providing a standard IBM
     Cloud deployment architecture reference solution for SAP on IBM
     PowerVS enterprise-class deployments following the [IBM Architecture
