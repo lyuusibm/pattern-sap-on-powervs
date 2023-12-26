@@ -183,90 +183,90 @@ The following represents a [baseline]{.underline} set of requirements
 which we believe are applicable to most clients and critical to a
 successful SAP deployment.
 
-  -----------------------------------------------------------------------
-  **Networking Requirements**
-  -----------------------------------------------------------------------
-  Enterprise connectivity to customer data center(s) to provide access to
-  applications from on-prem.
-
-  Map and convert existing customer SAP Network functionality into IBM
-  Cloud and PowerVS networking services
-
-  Migrate/Redeploy customer IP addressing scheme within the IBM Cloud
-  environment
-
-  Provide network isolation with the ability to segregate applications
-  based on attributes such as data classification, public vs internal
-  apps and function 
-  -----------------------------------------------------------------------
-
-  -----------------------------------------------------------------------
-  **Security Requirements**
-  -----------------------------------------------------------------------
-  Provide data encryption in transit and at rest
-
-  Migrate customer IDS/IAM Services to target IBM Cloud environment
-
-  Retain the same firewall rulesets across existing DCs
-
-  Firewalls must be restrictively configured to provide advanced security
-  features and prevent all traffic, both inbound and outbound, except
-  that which is specifically required, documented, and approved, and
-  include IPS/IDS services
-  -----------------------------------------------------------------------
-
-+-----------------------------------------------------------------------+
-| **Resiliency Requirements**                                           |
-+=======================================================================+
-| Multi-site capability to support a disaster recovery strategy and     |
-| solution leveraging IBM Cloud infrastructure DR capabilities          |
-+-----------------------------------------------------------------------+
-| Provide backups for data retention                                    |
-+-----------------------------------------------------------------------+
-| RTO/RPO = 4 hours/15 minutes; Rollback to original environments       |
-| should occur no later than specified RTOs                             |
-+-----------------------------------------------------------------------+
-| 99.95 Availability                                                    |
-+-----------------------------------------------------------------------+
-| Backups                                                               |
-|                                                                       |
-| -   Prod: Daily Full, logs per SAP product standard, 30 days          |
-|     retention time                                                    |
-|                                                                       |
-| -   Non-Prod: Weekly full, logs per SAP product standard, 14 days     |
-|     retention time                                                    |
-+-----------------------------------------------------------------------+
-
-  -----------------------------------------------------------------------
-  **Service Management Requirements**
-  -----------------------------------------------------------------------
-  Provide Health and System Monitoring with ability to monitor and
-  correlate performance metrics and events and provide alerting across
-  applications and infrastructure
-
-  Ability to diagnose issues and exceptions and identify error sources
-
-  Automate management processes to keep applications and infrastructure
-  secure, up to date, and available
-  -----------------------------------------------------------------------
-
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **Other Requirements**
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  Migrate SAP workloads from existing data center to IBM PowerVS
-
-  Customer's SAP systems and applications run on NetWeaver (application) & HANA (DB), AnyDB or S/4 HANA
-
-  Provide an Image Replication migration solution that will minimize disruption during cut-over.
-
-  Cloud infrastructure for the proposed IAAS solution must be SAP Certified
-
-  IBM Cloud IaaS will be deployed to support SAP and surrounding non-SAP workloads
-
-  Customer does not want to adopt
-  [RISE](https://www.ibm.com/consulting/rise-with-sap?utm_content=SRCWW&p1=Search&p4=43700077624079785&p5=e&gclid=EAIaIQobChMIr9bRlt7LgQMVJdHCBB0cewwcEAAYASAAEgIVgfD_BwE&gclsrc=aw.ds)
-  at this time but wants to consider Cloud deployment solution that would facilitate a future RISE transformation
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
++----------+-----------------------------------------------------------+
+| **       | **Requirement**                                           |
+| Aspect** |                                                           |
++==========+===========================================================+
+| Network  | Enterprise connectivity to customer data center(s) to     |
+|          | provide access to applications from on-prem.              |
++----------+-----------------------------------------------------------+
+|          | Map and convert existing customer SAP Network             |
+|          | functionality into IBM Cloud and PowerVS networking       |
+|          | services                                                  |
++----------+-----------------------------------------------------------+
+|          | Migrate/Redeploy customer IP addressing scheme within the |
+|          | IBM Cloud environment                                     |
++----------+-----------------------------------------------------------+
+|          | Provide network isolation with the ability to segregate   |
+|          | applications based on attributes such as data             |
+|          | classification, public vs internal apps and function      |
++----------+-----------------------------------------------------------+
+| Security | Provide data encryption in transit and at rest            |
++----------+-----------------------------------------------------------+
+|          | Migrate customer IDS/IAM Services to target IBM Cloud     |
+|          | environment                                               |
++----------+-----------------------------------------------------------+
+|          | Retain the same firewall rulesets across existing DCs     |
++----------+-----------------------------------------------------------+
+|          | Firewalls must be restrictively configured to provide     |
+|          | advanced security features and prevent all traffic, both  |
+|          | inbound and outbound, except that which is specifically   |
+|          | required, documented, and approved, and include IPS/IDS   |
+|          | services                                                  |
++----------+-----------------------------------------------------------+
+| Re       | Multi-site capability to support a disaster recovery      |
+| siliency | strategy and solution leveraging IBM Cloud infrastructure |
+|          | DR capabilities                                           |
++----------+-----------------------------------------------------------+
+|          | Provide backups for data retention                        |
++----------+-----------------------------------------------------------+
+|          | RTO/RPO = 4 hours/15 minutes; Rollback to original        |
+|          | environments should occur no later than specified RTOs    |
++----------+-----------------------------------------------------------+
+|          | 99.95 Availability                                        |
++----------+-----------------------------------------------------------+
+|          | Backups                                                   |
+|          |                                                           |
+|          | -   Prod: Daily Full, logs per SAP product standard, 30   |
+|          |     days retention time                                   |
+|          |                                                           |
+|          | -   Non-Prod: Weekly full, logs per SAP product standard, |
+|          |     14 days retention time                                |
++----------+-----------------------------------------------------------+
+| Service  | Provide Health and System Monitoring with ability to      |
+| Ma       | monitor and correlate performance metrics and events and  |
+| nagement | provide alerting across applications and infrastructure   |
++----------+-----------------------------------------------------------+
+|          | Ability to diagnose issues and exceptions and identify    |
+|          | error sources                                             |
++----------+-----------------------------------------------------------+
+|          | Automate management processes to keep applications and    |
+|          | infrastructure secure, up to date, and available          |
++----------+-----------------------------------------------------------+
+| Other    | Migrate SAP workloads from existing data center to IBM    |
+|          | PowerVS                                                   |
++----------+-----------------------------------------------------------+
+|          | Customer's SAP systems and applications run on NetWeaver  |
+|          | (application) & HANA (DB), AnyDB or S/4 HANA              |
++----------+-----------------------------------------------------------+
+|          | Provide an Image Replication migration solution that will |
+|          | minimize disruption during cut-over.                      |
++----------+-----------------------------------------------------------+
+|          | Cloud infrastructure for the proposed IAAS solution must  |
+|          | be SAP Certified                                          |
++----------+-----------------------------------------------------------+
+|          | IBM Cloud IaaS will be deployed to support SAP and        |
+|          | surrounding non-SAP workloads                             |
++----------+-----------------------------------------------------------+
+|          | Customer does not want to adopt                           |
+|          | [RISE](htt                                                |
+|          | ps://www.ibm.com/consulting/rise-with-sap?utm_content=SRC |
+|          | WW&p1=Search&p4=43700077624079785&p5=e&gclid=EAIaIQobChMI |
+|          | r9bRlt7LgQMVJdHCBB0cewwcEAAYASAAEgIVgfD_BwE&gclsrc=aw.ds) |
+|          | at this time but wants to consider Cloud deployment       |
+|          | solution that would facilitate a future RISE              |
+|          | transformation                                            |
++----------+-----------------------------------------------------------+
 
 ## Components
 
