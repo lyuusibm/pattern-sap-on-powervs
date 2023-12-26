@@ -38,9 +38,6 @@ keywords:
 |         |   | System           |   | Ops Suite)  |     instances, databases |
 |         |   | Monitoring       |   |             |     and hosts.           |
 |         |   |                  |   |             |                          |
-|         |   |                  |   |             | ```{=html}               |
-|         |   |                  |   |             | <!-- -->                 |
-|         |   |                  |   |             | ```                      |
 |         |   |                  |   |             | -   Displays the status  |
 |         |   |                  |   |             |     of managed objects   |
 |         |   |                  |   |             |     and detailed drill   |
