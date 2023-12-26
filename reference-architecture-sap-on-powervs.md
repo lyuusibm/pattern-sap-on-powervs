@@ -173,9 +173,7 @@ successful SAP deployment.
 |                    | RTO/RPO = 4 hours/15 minutes; Rollback to original environments should occur no later than specified RTOs                                                                                                                                                                                                                             |
 |                    | 99.95 Availability                                                                                                                                                                                                                                                                                                                    |
 |                    | Backups                                                                                                                                                                                                                                                                                                                               |
-|                    |                                                                                                                                                                                                                                                                                                                                       |
 |                    | -   Prod: Daily Full, logs per SAP product standard, 30 days retention time                                                                                                                                                                                                                                                           |
-|                    |                                                                                                                                                                                                                                                                                                                                       |
 |                    | -   Non-Prod: Weekly full, logs per SAP product standard, 14 days retention time                                                                                                                                                                                                                                                      |
 | Service Management | Provide Health and System Monitoring with ability to monitor and correlate performance metrics and events and provide alerting across applications and infrastructure                                                                                                                                                                 |
 |                    | Ability to diagnose issues and exceptions and identify error sources                                                                                                                                                                                                                                                                  |
@@ -192,181 +190,51 @@ successful SAP deployment.
 ## Components
 {: #components}
 
-
-| **Category**| **Solution Components** | **How it is used in solution**|
-| ----------- |-------------------------|-------------------------------|
-| Compute  | [[VPCVSIs]{.underline}](https://cloud.ibm.com/vpc-ext/provision/vs)| Edge VPC, IBM Storage Protect(BM) and NetWeaver and HANA DB|
-|          |                         |                                 |
-|          | Bare Metal ([IBM Storage Protect](https://www.ibm.com/support/pages/node/6498661))|
-|          |                         |                                 |
-|          | [Power VirtualServer](https://cloud.ibm.com/docs/sap?topic=sap-fast-path-site-map-power-vs)|
-| Storage  | Flash storage from IBM  | NetWeaver and HANA DB servers   |
-|          | FS9000 series devices   | primary storage production on   |
-|          |                         | Tier 1. Non-Production on Tier  |
-|          |                         | 3.                              |
-|          | [[Cloud Object          | Backup and archive, application |
-|          | Storage]{               | logs, operational logs and      |
-|          | .underline}](https://cl | audit logs                      |
-|          | oud.ibm.com/docs/cloud- |                                 |
-|          | object-storage?topic=cl |                                 |
-|          | oud-object-storage-abou |                                 |
-|          | t-cloud-object-storage) |                                 |
-|          |                         |                                 |
-|          | [Block                  |                                 |
-|          | storage](https          |                                 |
-|          | ://cloud.ibm.com/docs/v |                                 |
-|          | pc?topic=vpc-block-stor |                                 |
-|          | age-about&interface=ui) |                                 |
-| Ne       | [VPC Virtual Private    | Remote access to manage         |
-| tworking | Network                 | resources in private network    |
-|          | (VPN)                   |                                 |
-|          | ](https://cloud.ibm.com |                                 |
-|          | /docs/iaas-vpn?topic=ia |                                 |
-|          | as-vpn-getting-started) |                                 |
-|          | [[Virtual Private       | For private network access to   |
-|          | Gateway & Virtual       | Cloud Services, e.g. Key        |
-|          | Private Endpoint        | Protect, COS, etc.              |
-|          | (V                      |                                 |
-|          | PE)]{.underline}](https |                                 |
-|          | ://cloud.ibm.com/docs/v |                                 |
-|          | pc?topic=vpc-about-vpe) |                                 |
-|          | [Cloud Internet         | Public Load balancing and DDoS  |
-|          | Services                | of web servers traffic across   |
-|          | (CIS)](https://clo      | zones in the region             |
-|          | ud.ibm.com/docs/cis?top |                                 |
-|          | ic=cis-getting-started) |                                 |
-|          | [[DNS                   | Domain Naming System services   |
-|          | S                       |                                 |
-|          | ervices]{.underline}](h |                                 |
-|          | ttps://cloud.ibm.com/do |                                 |
-|          | cs/dns-svcs?topic=dns-s |                                 |
-|          | vcs-about-dns-services) |                                 |
-|          | [VPCs and               | Network Segmentation/Isolation  |
-|          | subnets](htt            |                                 |
-|          | ps://cloud.ibm.com/docs |                                 |
-|          | /vpc?topic=vpc-about-su |                                 |
-|          | bnets-vpc&interface=ui) |                                 |
-|          | [Transit                | Connects across VPC, PowerVS    |
-|          | Gateway](ht             | and Classic                     |
-|          | tps://cloud.ibm.com/doc |                                 |
-|          | s/transit-gateway?topic |                                 |
-|          | =transit-gateway-about) |                                 |
-|          | [IBM Cloud Application  | Load balancing workloads across |
-|          | Load                    | multiple workload instances     |
-|          | Bal                     | over the private network        |
-|          | ancer](https://cloud.ib |                                 |
-|          | m.com/docs/vpc?topic=vp |                                 |
-|          | c-load-balancers-about) |                                 |
-|          | (ALB)                   |                                 |
-|          |                         |                                 |
-|          | SAP Web Dispatcher      |                                 |
-| Security | [[Block Storage         | Block Storage Encryption at     |
-|          | encryption]{.underl     | rest                            |
-|          | ine}](https://cloud.ibm |                                 |
-|          | .com/docs/vpc?topic=vpc |                                 |
-|          | -mng-data&interface=ui) |                                 |
-|          | with provider keys      |                                 |
-|          | Cloud Object Storage    | Cloud Object Storage Encryption |
-|          | Encryption              | at rest                         |
-|          | PowerVS Tier1 or Tier3  | Power VS uses IBM FlashSystem   |
-|          | storage                 | Storage with AES-256 (Advanced  |
-|          |                         | Encryption Standard)            |
-|          |                         | hardware-based encryption       |
-|          | HANA Data Volume        | HANA Database Encryption at     |
-|          | Encryption (DVE)        | rest                            |
-|          | [[IAM]{.unde            | IBM Cloud Identity & Access     |
-|          | rline}](https://cloud.i | Management                      |
-|          | bm.com/docs/account?top |                                 |
-|          | ic=account-cloudaccess) |                                 |
-|          | Privileged Identity and | BYO Bastion host (or Privileged |
-|          | Access Management       | Access Gateway) with PAM SW     |
-|          |                         | deployed in Edge VPC            |
-|          | [[BYO Bastion Host on   | Remote access with Privileged   |
-|          | VPC VSI with PAM        | Access Management               |
-|          | SW]                     |                                 |
-|          | {.underline}](https://c |                                 |
-|          | loud.ibm.com/docs/frame |                                 |
-|          | work-financial-services |                                 |
-|          | ?topic=framework-financ |                                 |
-|          | ial-services-vpc-archit |                                 |
-|          | ecture-connectivity-bas |                                 |
-|          | tion-tutorial-teleport) |                                 |
-|          | [[Virtual Private       | Core Network Protection and     |
-|          | Clouds (VPCs), Subnets, | isolation                       |
-|          | Security Groups,        |                                 |
-|          | ACLs]{.                 |                                 |
-|          | underline}](https://clo |                                 |
-|          | ud.ibm.com/docs/vpc?top |                                 |
-|          | ic=vpc-getting-started) |                                 |
-|          |                         |                                 |
-|          | Isolated PowerVS LPARs  |                                 |
-|          | [Cloud Internet         | DDoS protection and Web App     |
-|          | Services                | Firewall                        |
-|          | (CIS)](https://clo      |                                 |
-|          | ud.ibm.com/docs/cis?top |                                 |
-|          | ic=cis-getting-started) |                                 |
-|          | -   [[Forti             | -   IPS/IDS protection at all   |
-|          | gate]{.underline}](http |     ingress/egress              |
-|          | s://cloud.ibm.com/catal |                                 |
-|          | og/content/ibm-fortigat | -   Unified Threat Management   |
-|          | e-AP-HA-terraform-deplo |     (UTM) Firewall              |
-|          | y-5dd3e4ba-c94b-43ab-b4 |                                 |
-|          | 16-c1c313479cec-global) |                                 |
-|          |                         |                                 |
-|          | -   [[Juniper           |                                 |
-|          |     vSRX]{.underline}]  |                                 |
-|          | (https://cloud.ibm.com/ |                                 |
-|          | catalog/content/juniper |                                 |
-|          | -vsrx-catalog-deploy-1. |                                 |
-|          | 4-dc1e707c-33dd-4321-b2 |                                 |
-|          | a5-c22dbf0dd0ee-global) |                                 |
-|          |                         |                                 |
-|          | -   [[Checkpoint Cloud  |                                 |
-|          |                         |                                 |
-|          |    Guard]{.underline}]( |                                 |
-|          | https://cloud.ibm.com/c |                                 |
-|          | atalog/content/checkpoi |                                 |
-|          | nt-iaas-gw-ibm-vpc-1.0. |                                 |
-|          | 7-9ed8dbde-2931-45f5-a7 |                                 |
-|          | a7-0c90ce0d2686-global) |                                 |
-|          |                         |                                 |
-|          | -   [[Palo              |                                 |
-|          |     Alto]{.u            |                                 |
-|          | nderline}](https://clou |                                 |
-|          | d.ibm.com/catalog/conte |                                 |
-|          | nt/ibmcloud-vmseries-1. |                                 |
-|          | 9-6470816d-562d-4627-86 |                                 |
-|          | a5-fe3ad4e94b30-global) |                                 |
-| Re       | HANA System Replication | Provide 99.95% availability for |
-| siliency | (HSR)                   | HANA DB                         |
-|          | [IBM                    | Backups and restores for images |
-|          | Stor                    | and file systems.               |
-|          | age](https://cloud.ibm. |                                 |
-|          | com/media/docs/download |                                 |
-|          | s/power-iaas/PowerVS_AI |                                 |
-|          | X_Backup_Performance_Be |                                 |
-|          | st_Practices_and_Guidel |                                 |
-|          | ines_v1_0_03012022.pdf) |                                 |
-|          | Protect                 |                                 |
-|          |                         |                                 |
-|          | [GRS](https:            |                                 |
-|          | //cloud.ibm.com/docs/po |                                 |
-|          | wer-iaas?topic=power-ia |                                 |
-|          | as-getting-started-GRS) |                                 |
-|          | DBACOCKPIT,             | SAP HANA backups                |
-|          | HANACOCKPIT, backint    |                                 |
-|          | Native database backup  | AnyDB backups                   |
-|          | capabilities            |                                 |
-| Service  | [IBM Cloud              | Apps and operational monitoring |
-| Ma       | Monitoring](            |                                 |
-| nagement | https://cloud.ibm.com/d |                                 |
-| (Observ  | ocs/monitoring?topic=mo |                                 |
-| ability) | nitoring-about-monitor) |                                 |
-|          | [IBM Log                | Application and operational     |
-|          | Analysis](https:        | logs                            |
-|          | //cloud.ibm.com/docs/lo |                                 |
-|          | g-analysis?topic=log-an |                                 |
-|          | alysis-getting-started) |                                 |
+| **Category**                       | **Solution Components**                                                                                                                                                                                     | **How it is used in solution**                                                                              |
+| Compute                            | [[VPC VSIs]{.underline}](https://cloud.ibm.com/vpc-ext/provision/vs)                                                                                                                                        | Edge VPC, IBM Storage Protect(BM) and NetWeaver and HANA DB                                                 |
+|                                    |                                                                                                                                                                                                             |                                                                                                             |
+|                                    | Bare Metal ([IBM Storage Protect](https://www.ibm.com/support/pages/node/6498661))                                                                                                                          |                                                                                                             |
+|                                    |                                                                                                                                                                                                             |                                                                                                             |
+|                                    | [Power Virtual Server](https://cloud.ibm.com/docs/sap?topic=sap-fast-path-site-map-power-vs)                                                                                                                |                                                                                                             |
+| Storage                            | Flash storage from IBM FS9000 series devices                                                                                                                                                                | NetWeaver and HANA DB servers primary storage production on Tier 1. Non-Production on Tier 3.               |
+|                                    | [[Cloud Object Storage]{.underline}](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-about-cloud-object-storage)                                                                 | Backup and archive, application logs, operational logs and audit logs                                       |
+|                                    |                                                                                                                                                                                                             |                                                                                                             |
+|                                    | [Block storage](https://cloud.ibm.com/docs/vpc?topic=vpc-block-storage-about&interface=ui)                                                                                                                  |                                                                                                             |
+| Networking                         | [VPC Virtual Private Network (VPN)](https://cloud.ibm.com/docs/iaas-vpn?topic=iaas-vpn-getting-started)                                                                                                     | Remote access to manage resources in private network                                                        |
+|                                    | [[Virtual Private Gateway & Virtual Private Endpoint (VPE)]{.underline}](https://cloud.ibm.com/docs/vpc?topic=vpc-about-vpe)                                                                                | For private network access to Cloud Services, e.g. Key Protect, COS, etc.                                   |
+|                                    | [Cloud Internet Services (CIS)](https://cloud.ibm.com/docs/cis?topic=cis-getting-started)                                                                                                                   | Public Load balancing and DDoS of web servers traffic across zones in the region                            |
+|                                    | [[DNS Services]{.underline}](https://cloud.ibm.com/docs/dns-svcs?topic=dns-svcs-about-dns-services)                                                                                                         | Domain Naming System services                                                                               |
+|                                    | [VPCs and subnets](https://cloud.ibm.com/docs/vpc?topic=vpc-about-subnets-vpc&interface=ui)                                                                                                                 | Network Segmentation/Isolation                                                                              |
+|                                    | [Transit Gateway](https://cloud.ibm.com/docs/transit-gateway?topic=transit-gateway-about)                                                                                                                   | Connects across VPC, PowerVS and Classic                                                                    |
+|                                    | [IBM Cloud Application Load Balancer](https://cloud.ibm.com/docs/vpc?topic=vpc-load-balancers-about) (ALB)                                                                                                  | Load balancing workloads across multiple workload instances over the private network                        |
+|                                    |                                                                                                                                                                                                             |                                                                                                             |
+|                                    | SAP Web Dispatcher                                                                                                                                                                                          |                                                                                                             |
+| Security                           | [[Block Storage encryption]{.underline}](https://cloud.ibm.com/docs/vpc?topic=vpc-mng-data&interface=ui) with provider keys                                                                                 | Block Storage Encryption at rest                                                                            |
+|                                    | Cloud Object Storage Encryption                                                                                                                                                                             | Cloud Object Storage Encryption at rest                                                                     |
+|                                    | PowerVS Tier1 or Tier3 storage                                                                                                                                                                              | Power VS uses IBM FlashSystem Storage with AES-256 (Advanced Encryption Standard) hardware-based encryption |
+|                                    | HANA Data Volume Encryption (DVE)                                                                                                                                                                           | HANA Database Encryption at rest                                                                            |
+|                                    | [[IAM]{.underline}](https://cloud.ibm.com/docs/account?topic=account-cloudaccess)                                                                                                                           | IBM Cloud Identity & Access Management                                                                      |
+|                                    | Privileged Identity and Access Management                                                                                                                                                                   | BYO Bastion host (or Privileged Access Gateway) with PAM SW deployed in Edge VPC                            |
+|                                    | [[BYO Bastion Host on VPC VSI with PAM SW]{.underline}](https://cloud.ibm.com/docs/framework-financial-services?topic=framework-financial-services-vpc-architecture-connectivity-bastion-tutorial-teleport) | Remote access with Privileged Access Management                                                             |
+|                                    | [[Virtual Private Clouds (VPCs), Subnets, Security Groups, ACLs]{.underline}](https://cloud.ibm.com/docs/vpc?topic=vpc-getting-started)                                                                     | Core Network Protection and isolation                                                                       |
+|                                    |                                                                                                                                                                                                             |                                                                                                             |
+|                                    | Isolated PowerVS LPARs                                                                                                                                                                                      |                                                                                                             |
+|                                    | [Cloud Internet Services (CIS)](https://cloud.ibm.com/docs/cis?topic=cis-getting-started)                                                                                                                   | DDoS protection and Web App Firewall                                                                        |
+|                                    | -   [[Fortigate]{.underline}](https://cloud.ibm.com/catalog/content/ibm-fortigate-AP-HA-terraform-deploy-5dd3e4ba-c94b-43ab-b416-c1c313479cec-global)                                                       | -   IPS/IDS protection at all ingress/egress                                                                |
+|                                    |                                                                                                                                                                                                             |                                                                                                             |
+|                                    | -   [[Juniper vSRX]{.underline}](https://cloud.ibm.com/catalog/content/juniper-vsrx-catalog-deploy-1.4-dc1e707c-33dd-4321-b2a5-c22dbf0dd0ee-global)                                                         | -   Unified Threat Management (UTM) Firewall                                                                |
+|                                    |                                                                                                                                                                                                             |                                                                                                             |
+|                                    | -   [[Checkpoint Cloud Guard]{.underline}](https://cloud.ibm.com/catalog/content/checkpoint-iaas-gw-ibm-vpc-1.0.7-9ed8dbde-2931-45f5-a7a7-0c90ce0d2686-global)                                              |                                                                                                             |
+|                                    |                                                                                                                                                                                                             |                                                                                                             |
+|                                    | -   [[Palo Alto]{.underline}](https://cloud.ibm.com/catalog/content/ibmcloud-vmseries-1.9-6470816d-562d-4627-86a5-fe3ad4e94b30-global)                                                                      |                                                                                                             |
+| Resiliency                         | HANA System Replication (HSR)                                                                                                                                                                               | Provide 99.95% availability for HANA DB                                                                     |
+|                                    | [IBM Storage](https://cloud.ibm.com/media/docs/downloads/power-iaas/PowerVS_AIX_Backup_Performance_Best_Practices_and_Guidelines_v1_0_03012022.pdf) Protect                                                 | Backups and restores for images and file systems.                                                           |
+|                                    |                                                                                                                                                                                                             |                                                                                                             |
+|                                    | [GRS](https://cloud.ibm.com/docs/power-iaas?topic=power-iaas-getting-started-GRS)                                                                                                                           |                                                                                                             |
+|                                    | DBACOCKPIT, HANACOCKPIT, backint                                                                                                                                                                            | SAP HANA backups                                                                                            |
+|                                    | Native database backup capabilities                                                                                                                                                                         | AnyDB backups                                                                                               |
+| Service Management (Observability) | [IBM Cloud Monitoring](https://cloud.ibm.com/docs/monitoring?topic=monitoring-about-monitor)                                                                                                                | Apps and operational monitoring                                                                             |
+|                                    | [IBM Log Analysis](https://cloud.ibm.com/docs/log-analysis?topic=log-analysis-getting-started)                                                                                                              | Application and operational logs                                                                            |
 {: caption="Table 2. Components" caption-side="bottom"}
 
 As mentioned earlier, the [Architecture
