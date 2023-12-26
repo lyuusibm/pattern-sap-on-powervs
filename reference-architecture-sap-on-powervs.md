@@ -161,16 +161,10 @@ successful SAP deployment.
 
 | Aspect                     | Requirement                                                                                                                                                                                                     |
 |---------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Network  | Enterprise connectivity to customer data center(s) to     |
-|          | provide access to applications from on-prem.              |
-|          | Map and convert existing customer SAP Network             |
-|          | functionality into IBM Cloud and PowerVS networking       |
-|          | services                                                  |
-|          | Migrate/Redeploy customer IP addressing scheme within the |
-|          | IBM Cloud environment                                     |
-|          | Provide network isolation with the ability to segregate   |
-|          | applications based on attributes such as data             |
-|          | classification, public vs internal apps and function      |
+| Network  | Enterprise connectivity to customer data center(s) to provide access to applications from on-prem.              |
+|          | Map and convert existing customer SAP Networkfunctionality into IBM Cloud and PowerVS networking services                                                  |
+|          | Migrate/Redeploy customer IP addressing scheme within the IBM Cloud environment|
+|          | Provide network isolation with the ability to segregate applications based on attributes such as data classification, public vs internal apps and function      |
 | Security | Provide data encryption in transit and at rest            |
 |          | Migrate customer IDS/IAM Services to target IBM Cloud     |
 |          | Retain the same firewall rulesets across existing DCs     |
