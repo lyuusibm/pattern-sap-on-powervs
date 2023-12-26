@@ -174,45 +174,30 @@ successful SAP deployment.
 |          | RTO/RPO = 4 hours/15 minutes; Rollback to original environments should occur no later than specified RTOs    |
 |          | 99.95 Availability                                        |
 |          | Backups                                                   |
-|          |                                                           |
 |          | -   Prod: Daily Full, logs per SAP product standard, 30 days retention time                                   |
-|          |                                                           |
 |          | -   Non-Prod: Weekly full, logs per SAP product standard, 14 days retention time                                |
 | Service Management| Provide Health and System Monitoring with ability to monitor and correlate performance metrics and events and provide alerting across applications and infrastructure   |
 |          | Ability to diagnose issues and exceptions and identify error sources                                             |
 |          | Automate management processes to keep applications and infrastructure secure, up to date, and available          |
 | Other    | Migrate SAP workloads from existing data center to IBM PowerVS                                                   |
 |          | Customer's SAP systems and applications run on NetWeaver (application) & HANA (DB), AnyDB or S/4 HANA              |
-|          | Provide an Image Replication migration solution that will minimize disruption during cut-over.                      |
+|          | Provide an Image Replication migration solution that will minimize disruption during cut-over                      |
 |          | Cloud infrastructure for the proposed IAAS solution must be SAP Certified                                          |
 |          | IBM Cloud IaaS will be deployed to support SAP and surrounding non-SAP workloads                             |
-|          | Customer does not want to adopt                           |
-|          | [RISE](https://www.ibm.com/consulting/rise-with-sap?utm_content=SRCWW&p1=Search&p4=43700077624079785&p5=e&gclid=EAIaIQobChMIr9bRlt7LgQMVJdHCBB0cewwcEAAYASAAEgIVgfD_BwE&gclsrc=aw.ds) at this time but wants to consider Cloud deployment solution that would facilitate a future RISE transformation                                            |
+|          | Customer does not want to adopt [RISE](https://www.ibm.com/consulting/rise-with-sap?utm_content=SRCWW&p1=Search&p4=43700077624079785&p5=e&gclid=EAIaIQobChMIr9bRlt7LgQMVJdHCBB0cewwcEAAYASAAEgIVgfD_BwE&gclsrc=aw.ds) at this time but wants to consider Cloud deployment solution that would facilitate a future RISE transformation                                            |
 {: caption="Table 1. Requirements" caption-side="bottom"}
 
 ## Components
 {: #components}
 
 
-+----------+-------------------------+---------------------------------+
-| **Ca     | **Solution Components** | **How it is used in solution**  |
-| tegory** |                         |                                 |
-| Compute  | [[VPC                   | Edge VPC, IBM Storage           |
-|          | VSIs]{.underline        | Protect(BM) and NetWeaver and   |
-|          | }](https://cloud.ibm.co | HANA DB                         |
-|          | m/vpc-ext/provision/vs) |                                 |
+| **Category**| **Solution Components** | **How it is used in solution**|
+| ----------- |-------------------------|-------------------------------|
+| Compute  | [[VPCVSIs]{.underline}](https://cloud.ibm.com/vpc-ext/provision/vs)| Edge VPC, IBM Storage Protect(BM) and NetWeaver and HANA DB|
 |          |                         |                                 |
-|          | Bare Metal ([IBM        |                                 |
-|          | Storage                 |                                 |
-|          | Protect](ht             |                                 |
-|          | tps://www.ibm.com/suppo |                                 |
-|          | rt/pages/node/6498661)) |                                 |
+|          | Bare Metal ([IBM Storage Protect](https://www.ibm.com/support/pages/node/6498661))|
 |          |                         |                                 |
-|          | [Power Virtual          |                                 |
-|          | Server](                |                                 |
-|          | https://cloud.ibm.com/d |                                 |
-|          | ocs/sap?topic=sap-fast- |                                 |
-|          | path-site-map-power-vs) |                                 |
+|          | [Power VirtualServer](https://cloud.ibm.com/docs/sap?topic=sap-fast-path-site-map-power-vs)|
 | Storage  | Flash storage from IBM  | NetWeaver and HANA DB servers   |
 |          | FS9000 series devices   | primary storage production on   |
 |          |                         | Tier 1. Non-Production on Tier  |
