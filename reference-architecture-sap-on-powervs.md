@@ -154,7 +154,7 @@ Figure 3
 ## Requirements
 {: #requirements}
 
-The following represents a [baseline]{.underline} set of requirements
+The following  represents a [baseline]{.underline} set of requirements
 which we believe are applicable to most clients and critical to a
 successful SAP deployment.
 
