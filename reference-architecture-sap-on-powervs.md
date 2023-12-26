@@ -158,9 +158,9 @@ The following  represents a [baseline]{.underline} set of requirements
 which we believe are applicable to most clients and critical to a
 successful SAP deployment.
 
-+----------+-----------------------------------------------------------+
-| **       | **Requirement**                                           |
-| Aspect** |                                                           |
+
+| Aspect                     | Requirement                                                                                                                                                                                                     |
+|---------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Network  | Enterprise connectivity to customer data center(s) to     |
 |          | provide access to applications from on-prem.              |
 |          | Map and convert existing customer SAP Network             |
