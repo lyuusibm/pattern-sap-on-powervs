@@ -43,8 +43,7 @@ workloads.
 .
 
 ![A diagram of a computer network Description automatically
-generated](./image1.png){width="6.5in"
-height="4.871527777777778in"}
+generated](./image1.png)
 
 Figure 1
 
@@ -68,8 +67,7 @@ Figure 2 illustrates a detailed network and component architecture for a
 single-zone, multi-region deployment to facilitate disaster recovery.
 
 ![A diagram of a network Description automatically
-generated](./image2.png){width="6.5in"
-height="6.321527777777778in"}
+generated](./image2.png)
 
 Figure 2
 
@@ -148,8 +146,7 @@ considered. Figure 3 below shows the domains that are covered in this
 solution.
 
 ![A screenshot of a computer Description automatically
-generated](./image3.png){width="6.5in"
-height="3.182638888888889in"}
+generated](./image3.png)
 
 Figure 3
 
@@ -161,7 +158,6 @@ The following represents a [baseline]{.underline} set of requirements
 which we believe are applicable to most clients and critical to a
 successful SAP deployment.
 
-+----+-----------------------------------------------------------------+
 | ** | **Requirement**                                                 |
 | As |                                                                 |
 | pe |                                                                 |

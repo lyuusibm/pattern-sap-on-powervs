@@ -14,8 +14,8 @@ keywords:
 # Overview
 {: #overview}
 
-> The objective of this document is to provide an IBM Solution Design
-> for the deployment of SAP on IBM Power Virtual Server (PowerVS) to:
+The objective of this document is to provide an IBM Solution Design
+for the deployment of SAP on IBM Power Virtual Server (PowerVS) to:
 
 
 -   Accelerate and simplify solution design by providing a standard IBM
@@ -31,17 +31,17 @@ keywords:
 -   Ensure requirements can be met from performance, system availability
     and security prespectives .
 
-> This is a [baseline]{.underline} solution pattern containing the
-> design and architecture decisions for an SAP deployment on IBM Cloud
-> Power Virtual Server to meet common requirements. Actual client
-> solutions will depend on specific client needs. This document does not
-> cover SAP configuration and SAP component deployment scenarios, it is
-> limited to IBM cloud infrastructure options to support SAP workloads.
->
-> It describes the deployment of SAP Business Applications Running on
-> SAP NetWeaver, SAP HANA or SAP AnyDB and other SAP products using
-> other technologies (SAP Content Server, or newer applications such as
-> SAP Data Intelligence).
+This is a [baseline]{.underline} solution pattern containing the
+design and architecture decisions for an SAP deployment on IBM Cloud
+Power Virtual Server to meet common requirements. Actual client
+solutions will depend on specific client needs. This document does not
+cover SAP configuration and SAP component deployment scenarios, it is
+limited to IBM cloud infrastructure options to support SAP workloads.
+
+It describes the deployment of SAP Business Applications Running on
+SAP NetWeaver, SAP HANA or SAP AnyDB and other SAP products using
+other technologies (SAP Content Server, or newer applications such as
+SAP Data Intelligence).
 
 IBM Cloud SAP-Certified Infrastructure provides the flexibility to run
 SAP workloads in the IBM Cloud and the ability quickly address issues
