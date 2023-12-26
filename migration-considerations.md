@@ -38,183 +38,29 @@ preferences.
 
 **Homogeneous Migration:**
 
-+------------+-----------------+-------------------+------------------+
-| *          | **Technique     | **Advantages and  | **Associated     |
-| *Migration | Summary**       | Concerns**        | Tools**          |
-| Method**   |                 |                   |                  |
-| Virtual    | Use specialty   | -   Lift and      | GLVM             |
-| Machine    | tools to back   |     shift         |                  |
-| (VM)       | up entire SAP   |     operation.    |                  |
-| Backup and | instance(s) as  |                   |                  |
-| Restore    | virtual machine | -   Ensure        |                  |
-|            | images and      |     tooling can   |                  |
-|            | restore to VPC  |     support delta |                  |
-|            | as Virtual      |     replication   |                  |
-|            | server          |     after the     |                  |
-|            | instances       |     point-in-time |                  |
-|            | (VSIs).         |     move.         |                  |
-|            |                 |                   |                  |
-|            |                 | -   Depending     |                  |
-|            |                 |     upon the      |                  |
-|            |                 |     tools used,   |                  |
-|            |                 |     post          |                  |
-|            |                 |     migration     |                  |
-|            |                 |     adjustments   |                  |
-|            |                 |     may be        |                  |
-|            |                 |     necessary to  |                  |
-|            |                 |     mesh with the |                  |
-|            |                 |     target        |                  |
-|            |                 |     environment   |                  |
-|            |                 |     in terms of   |                  |
-|            |                 |                   |                  |
-|            |                 |   network/systems |                  |
-|            |                 |     addressing,   |                  |
-|            |                 |     interface     |                  |
-|            |                 |     enablement,   |                  |
-|            |                 |     etc           |                  |
-| Database   | Backup the      | -   Time to       | SAP software to  |
-| Backup and | source database |     transfer      | build \"shell\"  |
-| Restore    | using native    |     large         | system;          |
-|            | DBMS tools.     |     database      |                  |
-|            | Restore backup  |     backups can   | IBM Storage      |
-|            | copy to a       |     be an issue.  | Protect (IBM     |
-|            | \"shell\" copy  |                   | Cloud Catalog)   |
-|            | of source       | -   Target needs  |                  |
-|            | system prebuilt |                   |                  |
-|            | on PowerVS,     |   same/compatible |                  |
-|            | using identical |     vendor        |                  |
-|            | versions of     |     software to   |                  |
-|            | software.       |     restore from  |                  |
-|            |                 |     backups       |                  |
-|            |                 |     file(s)       |                  |
-|            |                 |     received.     |                  |
-| Fresh      | Build a fresh   | Good for          | SAP software to  |
-| Build and  | copy of the SAP | applications and  | build \"shell\"  |
-| Copy the   | system on       | middleware        | system;          |
-| Config     | PowerVS and     | servers not       |                  |
-|            | copy/reenter    | requiring data    |                  |
-|            | configuration   | transfer. Risk of |                  |
-|            | parameters as   | error             |                  |
-|            | required.       | introduction if   |                  |
-|            |                 | post installation |                  |
-|            |                 | manual procedures |                  |
-|            |                 | are applied to    |                  |
-|            |                 | reproduce exact   |                  |
-|            |                 | configuration.    |                  |
-| Database   | Establish       | Verify that       | SAP software to  |
-| Re         | replication     | replication is    | build \"shell\"  |
-| plication/ | between source  | supported between | system; Vendor   |
-| Continuous | replication and | the source        | specific         |
-| Data       | target database | version of the    | database tools   |
-| Protection | constructed on  | database and the  | to configure and |
-| (CDP)      | PowerVS.        | target version    | administer       |
-| Tools      |                 | across the        | database         |
-|            |                 | distances         | replication      |
-|            |                 | involved          | (i.e. SQL Always |
-|            |                 |                   | on replication;  |
-|            |                 |                   | HANA System      |
-|            |                 |                   | Replication,     |
-|            |                 |                   | Oracle DataGuard |
-|            |                 |                   | etc.)            |
+| **Migration Method**                                        | **Technique Summary**                                                                                                                                                   | **Advantages and Concerns**                                                                                                                                                               | **Associated Tools**                                                                                                                                                                                     |
+|=============================================================|=========================================================================================================================================================================|===========================================================================================================================================================================================|==========================================================================================================================================================================================================|
+| Virtual Machine (VM) Backup and Restore                     | Use specialty tools to back up entire SAP instance(s) as virtual machine images and restore to VPC as Virtual server instances (VSIs).                                  | -   Lift and shift operation.                                                                                                                                                             | GLVM                                                                                                                                                                                                     |
+|                                                             |                                                                                                                                                                         |                                                                                                                                                                                           |                                                                                                                                                                                                          |
+|                                                             |                                                                                                                                                                         | -   Ensure tooling can support delta replication after the point-in-time move.                                                                                                            |                                                                                                                                                                                                          |
+|                                                             |                                                                                                                                                                         |                                                                                                                                                                                           |                                                                                                                                                                                                          |
+|                                                             |                                                                                                                                                                         | -   Depending upon the tools used, post migration adjustments may be necessary to mesh with the target environment in terms of network/systems addressing, interface enablement, etc      |                                                                                                                                                                                                          |
+| Database Backup and Restore                                 | Backup the source database using native DBMS tools. Restore backup copy to a \"shell\" copy of source system prebuilt on PowerVS, using identical versions of software. | -   Time to transfer large database backups can be an issue.                                                                                                                              | SAP software to build \"shell\" system;                                                                                                                                                                  |
+|                                                             |                                                                                                                                                                         |                                                                                                                                                                                           |                                                                                                                                                                                                          |
+|                                                             |                                                                                                                                                                         | -   Target needs same/compatible vendor software to restore from backups file(s) received.                                                                                                | IBM Storage Protect (IBM Cloud Catalog)                                                                                                                                                                  |
+| Fresh Build and Copy the Config                             | Build a fresh copy of the SAP system on PowerVS and copy/reenter configuration parameters as required.                                                                  | Good for applications and middleware servers not requiring data transfer. Risk of error introduction if post installation manual procedures are applied to reproduce exact configuration. | SAP software to build \"shell\" system;                                                                                                                                                                  |
+| Database Replication/Continuous Data Protection (CDP) Tools | Establish replication between source replication and target database constructed on PowerVS.                                                                            | Verify that replication is supported between the source version of the database and the target version across the distances involved                                                      | SAP software to build \"shell\" system; Vendor specific database tools to configure and administer database replication (i.e. SQL Always on replication; HANA System Replication, Oracle DataGuard etc.) |
 {: caption="Table 1. Homogeneous Migration" caption-side="bottom"}
-
-**\
-**
 
 **Heterogeneous Migration:**
 
-+---------------+----------------+-------------------+----------------+
-| **Migration   | **Technique    | **Advantages and  | **Associated   |
-| Method**      | Summary**      | Concerns**        | Tools**        |
-| System Copy   | Move or        | Commonly used to  | Copy           |
-| that uses     | Re-Platform to | change database   | Export/Import  |
-| [SWPM](ht     | different CPU  | server in         | of SWPM        |
-| tps://support | Architecture,  | preparation for   |                |
-| .sap.com/en/t | OS, or         | more significant  |                |
-| ools/software | database. Uses | move; for         |                |
-| -logistics-to | System         | example, move to  |                |
-| ols/software- |                | SAP HANA DB with  |                |
-| provisioning- |                | a Classical       |                |
-| manager.html) |                | Migration         |                |
-|               |                | approach          |                |
-| SAP           | Export         | Time to transfer  | SAP software   |
-| Export/Import | database from  | export across a   | to build       |
-|               | source system  | network is a      | \"shell\"      |
-|               | to target on   | concern if        | system; Aspera |
-|               | Po             | database is       | (optional) to  |
-|               | werVS.Transfer | large. Using SAP  | expedite       |
-|               | the export to  | import/export     | transfer of    |
-|               | PowerVS and    | procedures        | SAP export     |
-|               | import into a  | eliminates        |                |
-|               | prebuilt       | concern about     |                |
-|               | \"shell\"      | having compatible |                |
-|               | version of     | backup/restore    |                |
-|               | same system,   | software at the   |                |
-|               | applying       | source and        |                |
-|               | variations to  | target.           |                |
-|               | software as    |                   |                |
-|               | required.      |                   |                |
-| Standard [DMO | Use SAP        | Technique         | SAP software   |
-| Migration](ht | SUM/DMO to     | supports upgrade  | to build       |
-| tps://support | migrate and    | of application    | \"shell\"      |
-| .sap.com/en/t | upgrade        | and/or database   | system; SAP    |
-| ools/software | application    | software. Time to | SUM/DMO        |
-| -logistics-to | and/or         | execute SUM/DMO   | migration tool |
-| ols/software- | database       | across a network  |                |
-| update-manage | software and   | can be lengthy if |                |
-| r/database-mi | associated     | source database   |                |
-| gration-optio | data from      | is large and/or   |                |
-| n-dmo.html) - | source         | network           |                |
-| from          | location       | connection is     |                |
-| on-premises   | across the     | slow or           |                |
-| to IBM Cloud  | network to a   | unreliable.       |                |
-|               | \"shell\"      |                   |                |
-|               | target system  |                   |                |
-|               | on IBM Cloud   |                   |                |
-|               | PowerVS.       |                   |                |
-| Two Step      | Perform a Lift | Two Step          | SAP software   |
-| Migration:    | and Shift      | migration         | to build       |
-| Lift and      | Migration of   | approach can take | \"shell\"      |
-| Shift,        | source system  | a long time to    | system; Aspera |
-| followed by   | to IBM Cloud   | execute. It is    | (optional) to  |
-| SUM/DMO       | PowerVS Build  | easier and faster | expedite lift  |
-| t             | a shell target | to run a SUM/DMO  | and shift      |
-| ransformation | system in IBM  | procedure in this | transfer SAP   |
-|               | Cloud that has | way because the   | SUM/DMO        |
-|               | applied        | source and target | migration tool |
-|               | necessary      | systems are       |                |
-|               | variations in  | co-located.       |                |
-|               | software.      |                   |                |
-|               |                |                   |                |
-|               | Perform a      |                   |                |
-|               | SUM/DMO        |                   |                |
-|               | procedure      |                   |                |
-|               | within IBM     |                   |                |
-|               | Cloud to       |                   |                |
-|               | mi             |                   |                |
-|               | grate/transfer |                   |                |
-|               | the data to    |                   |                |
-|               | the new        |                   |                |
-|               | system.        |                   |                |
-| Partner Tools | Build a        | Supports          | SAP            |
-| (e.g. SNP     | \"shell\"      | application       | installation   |
-| Cockpit)      | target system  | modernization,    | software; SNP  |
-| (https://www. | in VPC that    | simplifies        | CrystalBridge  |
-| snpgroup.com) | has required   | migration using   | (via IBM       |
-|               | software       | custom tooling.   | Consulting);   |
-|               | levels. Use    | Requires a robust | SNP Cockpit    |
-|               | SNP tools to   | network           | (via IBM       |
-|               | analyze source | connection to     | Consulting);   |
-|               | system and     | accomplish the    |                |
-|               | transfer a     | migration +       |                |
-|               | subset of      | transformation to |                |
-|               | configuration, | the               |                |
-|               | data, and/or   | PowerVS-resident  |                |
-|               | technical debt | target system     |                |
-|               | from the       |                   |                |
-|               | source system  |                   |                |
-|               | across the     |                   |                |
-|               | network to the |                   |                |
-|               | target system  |                   |                |
-|               | .              |                   |                |
+| **Migration Method**                                                                                                                                                           | **Technique Summary**                                                                                                                                                                                                                                 | **Advantages and Concerns**                                                                                                                                                                                 | **Associated Tools**                                                                                                     |
+|================================================================================================================================================================================|=======================================================================================================================================================================================================================================================|=============================================================================================================================================================================================================|==========================================================================================================================|
+| System Copy that uses [SWPM](https://support.sap.com/en/tools/software-logistics-tools/software-provisioning-manager.html)                                                     | Move or Re-Platform to different CPU Architecture, OS, or database. Uses System                                                                                                                                                                       | Commonly used to change database server in preparation for more significant move; for example, move to SAP HANA DB with a Classical Migration approach                                                      | Copy Export/Import of SWPM                                                                                               |
+| SAP Export/Import                                                                                                                                                              | Export database from source system to target on PowerVS.Transfer the export to PowerVS and import into a prebuilt \"shell\" version of same system, applying variations to software as required.                                                      | Time to transfer export across a network is a concern if database is large. Using SAP import/export procedures eliminates concern about having compatible backup/restore software at the source and target. | SAP software to build \"shell\" system; Aspera (optional) to expedite transfer of SAP export                             |
+| Standard [DMO Migration](https://support.sap.com/en/tools/software-logistics-tools/software-update-manager/database-migration-option-dmo.html) - from on-premises to IBM Cloud | Use SAP SUM/DMO to migrate and upgrade application and/or database software and associated data from source location across the network to a \"shell\" target system on IBM Cloud PowerVS.                                                            | Technique supports upgrade of application and/or database software. Time to execute SUM/DMO across a network can be lengthy if source database is large and/or network connection is slow or unreliable.    | SAP software to build \"shell\" system; SAP SUM/DMO migration tool                                                       |
+| Two Step Migration: Lift and Shift, followed by SUM/DMO transformation                                                                                                         | Perform a Lift and Shift Migration of source system to IBM Cloud PowerVS Build a shell target system in IBM Cloud that has applied necessary variations in software.                                                                                  | Two Step migration approach can take a long time to execute. It is easier and faster to run a SUM/DMO procedure in this way because the source and target systems are co-located.                           | SAP software to build \"shell\" system; Aspera (optional) to expedite lift and shift transfer SAP SUM/DMO migration tool |
+|                                                                                                                                                                                |                                                                                                                                                                                                                                                       |                                                                                                                                                                                                             |                                                                                                                          |
+|                                                                                                                                                                                | Perform a SUM/DMO procedure within IBM Cloud to migrate/transfer the data to the new system.                                                                                                                                                          |                                                                                                                                                                                                             |                                                                                                                          |
+| Partner Tools (e.g. SNP Cockpit) (https://www.snpgroup.com)                                                                                                                    | Build a \"shell\" target system in VPC that has required software levels. Use SNP tools to analyze source system and transfer a subset of configuration, data, and/or technical debt from the source system across the network to the target system . | Supports application modernization, simplifies migration using custom tooling. Requires a robust network connection to accomplish the migration + transformation to the PowerVS-resident target system      | SAP installation software; SNP CrystalBridge (via IBM Consulting); SNP Cockpit (via IBM Consulting);                     |
 {: caption="Table 2. Heterogeneous Migration" caption-side="bottom"}
