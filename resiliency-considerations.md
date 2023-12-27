@@ -43,18 +43,13 @@ The table below shows a comparison of the different deployment options.
 | Deployment    | Availability | Description   | Recommended use   |
 |------------------|------------------|------------------|------------------|
 | Single Zone                 | 99.9%           | \- Single instance (single point of failure) or multiple instances (protects from infrastructure failures) | \- Low to medium priority applications                                             |
-|                             |                 |                                                                                                            |                                                                                    |
 |                             |                 | \- Low/Medium cost                                                                                         | \- Non-production environment                                                      |
 | Single Zone; Multi Instance | 99.95%          | \- Multi-instance (protects from infrastructure failures)                                                  | \- Core business applications                                                      |
-|                             |                 |                                                                                                            |                                                                                    |
 |                             |                 |                                                                                                            | \- Production level environments with resiliency requirements not exceeding 99.95% |
 | Multi-zone, Single Region   | 99.99%^2^       | \- Redundant resources                                                                                     | \- Core business applications                                                      |
-|                             |                 |                                                                                                            |                                                                                    |
-|                             |                 | \- Protection from zone outages                                                                            | \- Production level environments with stringent resiliency requirements            |
-|                             |                 |                                                                                                            |                                                                                    |
+|                             |                 | \- Protection from zone outages                                                                            | \- Production level environments with stringent resiliency requirements
 |                             |                 | \- Medium/high cost                                                                                        |                                                                                    |
-| Multi-zone, Multi-Region    | 99.99%          | \- Protection from region outages                                                                          | \- Disaster Recovery                                                               |
-|                             |                 |                                                                                                            |                                                                                    |
+| Multi-zone, Multi-Region    | 99.99%          | \- Protection from region outages                                                                          | \- Disaster Recovery
 |                             |                 | \- High cost                                                                                               | \- Business continuity policies with cross geo or cross-country requirements       |
 {: caption="Table 1. Resiliency options" caption-side="bottom"}
 
