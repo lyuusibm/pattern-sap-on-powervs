@@ -17,8 +17,8 @@ keywords:
 
 | **Architecture decision**         | **Requirement**                                        | **Decision**                                                                                                                                            | **Rationale**      |
 |-|-|-|-|
-| Primary Storage - Production      | Tier 1 - 10 IOPS                                       | Flash storage from IBM FS9000 series devices                                                                                                             | Tier 1 HANA DB on Production|
-|                                   |                 |Recommended for large non-HANA DB                 |                 |                 |
+| Primary Storage - Production      | Tier 1 - 10 IOPS                                       | Flash storage from IBM FS9000 series devices                                                                                                             | Tier 1 HANA DB on Production
+|                                   |                 |                 |Recommended for large non-HANA DB                 |                 |                 |
 |Maximize performance and optimize costs for peak IOPS workload.                 |
 |                                   |                                                        |                 |Using of a mix of Tiers is not supported.                                       |
 | Primary Storage -- Non-Production | Tier 3 - 3 IOPS                                        | Flash storage from IBM FS9000 series devices                                                                                                             | Recommended for all non-DB tiers (App. Servers) including non-critical DB LPARs |                    |
@@ -31,5 +31,7 @@ keywords:
 |                                   |                                                        |Backup/ Restore tools                                                                                                                                |ASPERA for high-speed data transfer ideal for Migrations
 |                                   |                                                        |Aspera data transfer                                                                                                                                 | Minimize
 |                                   |                                                        | GLVM                                                                                                                                                 | -   Business disruption due to migration
-|                                   |                                                        | -   For more information see [Moving SAP Workloads](https://cloud.ibm.com/docs/sap?topic=sap-faq-moving-sap-workloads#faq-moving-sap-workloads-overview) | -   Cost and efforts incurred in testing migrated databases                     |                    |
+|                                   |                                                        |     | -   Cost and efforts incurred in testing migrated databases                     |                    |
 {: caption="Table 1. Architecture decisions for storage" caption-side="bottom"}
+
+For more information see [Moving SAP Workloads](https://cloud.ibm.com/docs/sap?topic=sap-faq-moving-sap-workloads#faq-moving-sap-workloads-overview)
