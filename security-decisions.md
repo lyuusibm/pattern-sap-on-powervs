@@ -15,174 +15,36 @@ keywords:
 # Architecture decisions for security
 {: #security-decisions}
 
-+---------+---------------+---+--------------------+----------------------+
-| **Archi | **            | * |                    | **Rationale**        |
-| tecture | Requirement** | * |                    |                      |
-| dec     |               | D |                    |                      |
-| ision** |               | e |                    |                      |
-|         |               | c |                    |                      |
-|         |               | i |                    |                      |
-|         |               | s |                    |                      |
-|         |               | i |                    |                      |
-|         |               | o |                    |                      |
-|         |               | n |                    |                      |
-|         |               | * |                    |                      |
-|         |               | * |                    |                      |
-| Primary | Ability to    |   | Power VS uses IBM  | Industry-Standard    |
-| Storage | encrypt data  |   | FlashSystem        | AES-256 encryption   |
-|         | at rest       |   | Storage with       | as provided by       |
-|         |               |   | AES-256 (Advanced  | FlashSystem Storage  |
-|         |               |   | Encryption         | for PowerVS          |
-|         |               |   | Standard)          |                      |
-|         |               |   | hardware-based     |                      |
-|         |               |   | encryption         |                      |
-| Backup  | Ability to    |   | Cloud Object       | By default, all      |
-| Storage | encrypt       |   | Storage Encryption | objects that are     |
-| &       | backups at    |   |                    | stored in IBM Cloud  |
-|         | rest          |   | Provider managed   | Object Storage are   |
-| Archive |               |   | encryption         | encrypted by using   |
-| Storage |               |   | provided by block  | randomly generated   |
-|         |               |   | storage.           | keys and an          |
-|         |               |   |                    | all-                 |
-|         |               |   |                    | or-nothing-transform |
-|         |               |   |                    | (AONT).              |
-|         |               |   |                    |                      |
-|         |               |   |                    | The file systems     |
-|         |               |   |                    | associated within    |
-|         |               |   |                    | any Classic          |
-|         |               |   |                    | infrastructure is    |
-|         |               |   |                    | IBM Cloud Block      |
-|         |               |   |                    | Storage Volume or    |
-|         |               |   |                    | file storage. Block  |
-|         |               |   |                    | and File Storage     |
-|         |               |   |                    | allows for Provider  |
-|         |               |   |                    | managed encryption   |
-|         |               |   |                    | (IBM Cloud managed   |
-|         |               |   |                    | keys) which will be  |
-|         |               |   |                    | configured by        |
-|         |               |   |                    | default when storage |
-|         |               |   |                    | is setup.            |
-| HANA    | Ability to    |   | HANA Data Volume   | DVE encrypts HANA    |
-| Data    | encrypt SAP   |   | Encryption (DVE)   | data at the          |
-| Enc     | HANA data at  |   |                    | persistence layer,   |
-| ryption | rest          |   |                    | protecting data      |
-|         |               |   |                    | stored on disk from  |
-|         |               |   |                    | unauthorized access  |
-|         |               |   |                    | at operating system  |
-|         |               |   |                    | level.               |
-| Data -  | IaaS platform |   | -   FTPs and HTTPs | Client to server     |
-| Enc     | must support  |   |     protocols      | encryption can be    |
-| ryption | Data          |   |     (client to     | accomplished over    |
-| in      | Encryption:   |   |     server)        | HTTPs (SSL);         |
-| transit |               |   |                    |                      |
-|         | 1.  Client to |   | -   Inflight       | File transfer        |
-|         |     server    |   |     encryption for | encryption via FTPs  |
-|         |               |   |     HANA DB        |                      |
-|         | 2.  App. LPAR |   |     supported      | SAP supports         |
-|         |     to DB     |   |     using TLS/SSL, | encryption between   |
-|         |     LPAR      |   |     encryption for | application and      |
-|         |               |   |     App to DB      | database using SSL.  |
-| I       | Securely      |   | IBM Cloud IAM      | Use IAM access       |
-| dentity | authenticate  |   |                    | policies to assign   |
-| Access  | users for     |   |                    | users, service IDs,  |
-| & Role  | platform      |   |                    | and trusted profiles |
-| Man     | services and  |   |                    | access to resources  |
-| agement | control       |   |                    | within the IBM Cloud |
-| (IDM)   | access to     |   |                    | account.             |
-|         | resources     |   |                    |                      |
-|         | consistently  |   |                    |                      |
-|         | across IBM    |   |                    |                      |
-|         | Cloud         |   |                    |                      |
-| Pri     | Privileged    |   | -   BYO Bastion    | Securely access      |
-| vileged | access        |   |     host (or       | remote resources     |
-| I       | management    |   |     Privileged     | over the private     |
-| dentity | services for  |   |     Access         | network for          |
-| &       | a             |   |     Gateway) with  | management purposes; |
-| Access  | dministrative |   |     PAM SW         | bastion accessed via |
-| Man     | purposes      |   |     deployed in    | SSH. Session         |
-| agement |               |   |     Edge VPC       | recording, tracking  |
-|         |               |   |                    | all activities,      |
-|         |               |   | -   2FA            | successful or not,   |
-|         |               |   |     Authentication | to note any          |
-|         |               |   |     though IBM     | potential threats    |
-|         |               |   |     Security       |                      |
-|         |               |   |     Verify         |                      |
-| Core    | -   Strict    |   | -   Separate VPCs, | A design combination |
-| Network |               |   |     Subnets, ACLs  | using:               |
-| Pro     |    separation |   |     and Security   |                      |
-| tection |     of duties |   |     Groups for     | Separate VPCs        |
-|         |               |   |     non-SAP        | (transit,            |
-|         | -   Isolated  |   |     workloads that | management,          |
-|         |     security  |   |     may exist in   | workload) connected  |
-|         |     zones     |   |     VPC.           | through transit      |
-|         |     between   |   |                    | gateway and, the use |
-|         |               |   | -   In addition to | of edge firewall     |
-|         |  environments |   |     VPC            | capabilities.        |
-|         |               |   |     capabilities,  | Subnets, Security    |
-|         | -   Isolated, |   |     use of virtual | Groups and ACLs to   |
-|         |     private   |   |     firewalls      | create an            |
-|         |     cloud     |   |     deployed to    | Edge/Transit VPC     |
-|         |               |   |     the            | design along with    |
-|         |   environment |   |     Edge/Transit   | isolated LPARs on    |
-|         |               |   |     VPC to provide | PowerVS              |
-|         |               |   |     advance FW and |                      |
-|         |               |   |     routing        |                      |
-|         |               |   |     capabilities   |                      |
-|         |               |   |     between VPC    |                      |
-|         |               |   |     and PowerVS    |                      |
-|         |               |   |                    |                      |
-|         |               |   | -   Separation of  |                      |
-|         |               |   |     application    |                      |
-|         |               |   |     and DB in      |                      |
-|         |               |   |     separate       |                      |
-|         |               |   |     PowerVS LPARs  |                      |
-|         |               |   |     well as        |                      |
-|         |               |   |     separate       |                      |
-|         |               |   |     production and |                      |
-|         |               |   |     non-Production |                      |
-|         |               |   |     environments.  |                      |
-| Threat  | -   Boundary  |   | BYO Virtual        | -   Provided by      |
-| de      |               |   | Firewall (on VSI)  |     Enterprise       |
-| tection |   protection: |   | in Edge VPC        |     Network DMZ      |
-| and     |     highest   |   | (deployed across   |                      |
-| r       |     level of  |   | availability       | -   In addition, if  |
-| esponse |     isolation |   | zones) -- client   |     client requires: |
-|         |     from      |   | choices            |                      |
-|         |     external  |   |                    | -   Virtual FW on    |
-|         |     network   |   | -   [Fort          |     VSI in the       |
-|         |     threats   |   | igate](https://clo |     [Transit/Edge    |
-|         |               |   | ud.ibm.com/catalog |     VPC](http        |
-|         | -   IPS/IDS   |   | /content/ibm-forti | s://cloud.ibm.com/do |
-|         |               |   | gate-AP-HA-terrafo | cs/solution-tutorial |
-|         |    protection |   | rm-deploy-5dd3e4ba | s?topic=solution-tut |
-|         |     at all    |   | -c94b-43ab-b416-c1 | orials-vpc-transit1) |
-|         |     i         |   | c313479cec-global) |                      |
-|         | ngress/egress |   |                    | -   Client           |
-|         |               |   | -   [Juniper       |     preference       |
-|         | -   Unified   |   |     vSRX](https:   |     however          |
-|         |     Threat    |   | //cloud.ibm.com/ca |     recommendation   |
-|         |               |   | talog/content/juni |     is Fortigate or  |
-|         |    Management |   | per-vsrx-catalog-d |     Juniper.         |
-|         |     (UTM)     |   | eploy-1.4-dc1e707c |                      |
-|         |     Firewall  |   | -33dd-4321-b2a5-c2 | -   Fortigate        |
-|         |               |   | 2dbf0dd0ee-global) |     supports native  |
-|         |               |   |                    |     HA configuration |
-|         |               |   | -   [Checkpoint    |                      |
-|         |               |   |     Cloud          | -   Fortigate and    |
-|         |               |   |     Guard](https:/ |     Juniper both     |
-|         |               |   | /cloud.ibm.com/cat |     support both IPS |
-|         |               |   | alog/content/check |     & IDS            |
-|         |               |   | point-iaas-gw-ibm- |                      |
-|         |               |   | vpc-1.0.7-9ed8dbde |                      |
-|         |               |   | -2931-45f5-a7a7-0c |                      |
-|         |               |   | 90ce0d2686-global) |                      |
-|         |               |   |                    |                      |
-|         |               |   | -   [Palo          |                      |
-|         |               |   |     Al             |                      |
-|         |               |   | to](https://cloud. |                      |
-|         |               |   | ibm.com/catalog/co |                      |
-|         |               |   | ntent/ibmcloud-vms |                      |
-|         |               |   | eries-1.9-6470816d |                      |
-|         |               |   | -562d-4627-86a5-fe |                      |
-|         |               |   | 3ad4e94b30-global) |                      |
+| **Architecture decision**               | **Requirement**                                                                                                 | **Decision** |                                                                                                                                                                       | **Rationale**                                                                                                                                                                                                                                                      |
+|-|-|-|-|-|
+| Primary Storage                         | Ability to encrypt data at rest                                                                                 |              | Power VS uses IBM FlashSystem Storage with AES-256 (Advanced Encryption Standard) hardware-based encryption                                                           | Industry-Standard AES-256 encryption as provided by FlashSystem Storage for PowerVS                                                                                                                                                                                |
+| Backup Storage &                        | Ability to encrypt backups at rest                                                                              |              | Cloud Object Storage Encryption                                                                                                                                       | By default, all objects that are stored in IBM Cloud Object Storage are encrypted by using randomly generated keys and an all-or-nothing-transform (AONT).                                                                                                         |
+|                                         |                                                                                                                 |              |                                                                                                                                                                       |                                                                                                                                                                                                                                                                    |
+| Archive Storage                         |                                                                                                                 |              | Provider managed encryption provided by block storage.                                                                                                                | The file systems associated within any Classic infrastructure is IBM Cloud Block Storage Volume or file storage. Block and File Storage allows for Provider managed encryption (IBM Cloud managed keys) which will be configured by default when storage is setup. |
+| HANA Data Encryption                    | Ability to encrypt SAP HANA data at rest                                                                        |              | HANA Data Volume Encryption (DVE)                                                                                                                                     | DVE encrypts HANA data at the persistence layer, protecting data stored on disk from unauthorized access at operating system level.                                                                                                                                |
+| Data - Encryption in transit            | IaaS platform must support Data Encryption:                                                                     |              | -   FTPs and HTTPs protocols (client to server)                                                                                                                       | Client to server encryption can be accomplished over HTTPs (SSL);                                                                                                                                                                                                  |
+|                                         |                                                                                                                 |              |                                                                                                                                                                       |                                                                                                                                                                                                                                                                    |
+|                                         | 1.  Client to server                                                                                            |              | -   Inflight encryption for HANA DB supported using TLS/SSL, encryption for App to DB                                                                                 | File transfer encryption via FTPs                                                                                                                                                                                                                                  |
+|                                         |                                                                                                                 |              |                                                                                                                                                                       |                                                                                                                                                                                                                                                                    |
+|                                         | 2.  App. LPAR to DB LPAR                                                                                        |              |                                                                                                                                                                       | SAP supports encryption between application and database using SSL.                                                                                                                                                                                                |
+| Identity Access & Role Management (IDM) | Securely authenticate users for platform services and control access to resources consistently across IBM Cloud |              | IBM Cloud IAM                                                                                                                                                         | Use IAM access policies to assign users, service IDs, and trusted profiles access to resources within the IBM Cloud account.                                                                                                                                       |
+| Privileged Identity & Access Management | Privileged access management services for administrative purposes                                               |              | -   BYO Bastion host (or Privileged Access Gateway) with PAM SW deployed in Edge VPC                                                                                  | Securely access remote resources over the private network for management purposes; bastion accessed via SSH. Session recording, tracking all activities, successful or not, to note any potential threats                                                          |
+|                                         |                                                                                                                 |              |                                                                                                                                                                       |                                                                                                                                                                                                                                                                    |
+|                                         |                                                                                                                 |              | -   2FA Authentication though IBM Security Verify                                                                                                                     |                                                                                                                                                                                                                                                                    |
+| Core Network Protection                 | -   Strict separation of duties                                                                                 |              | -   Separate VPCs, Subnets, ACLs and Security Groups for non-SAP workloads that may exist in VPC.                                                                     | A design combination using:                                                                                                                                                                                                                                        |
+|                                         |                                                                                                                 |              |                                                                                                                                                                       |                                                                                                                                                                                                                                                                    |
+|                                         | -   Isolated security zones between environments                                                                |              | -   In addition to VPC capabilities, use of virtual firewalls deployed to the Edge/Transit VPC to provide advance FW and routing capabilities between VPC and PowerVS | Separate VPCs (transit, management, workload) connected through transit gateway and, the use of edge firewall capabilities. Subnets, Security Groups and ACLs to create an Edge/Transit VPC design along with isolated LPARs on PowerVS                            |
+|                                         |                                                                                                                 |              |                                                                                                                                                                       |                                                                                                                                                                                                                                                                    |
+|                                         | -   Isolated, private cloud environment                                                                         |              | -   Separation of application and DB in separate PowerVS LPARs well as separate production and non-Production environments.                                           |                                                                                                                                                                                                                                                                    |
+| Threat detection and response           | -   Boundary protection: highest level of isolation from external network threats                               |              | BYO Virtual Firewall (on VSI) in Edge VPC (deployed across availability zones) -- client choices                                                                      | -   Provided by Enterprise Network DMZ                                                                                                                                                                                                                             |
+|                                         |                                                                                                                 |              |                                                                                                                                                                       |                                                                                                                                                                                                                                                                    |
+|                                         | -   IPS/IDS protection at all ingress/egress                                                                    |              | -   [Fortigate](https://cloud.ibm.com/catalog/content/ibm-fortigate-AP-HA-terraform-deploy-5dd3e4ba-c94b-43ab-b416-c1c313479cec-global)                               | -   In addition, if client requires:                                                                                                                                                                                                                               |
+|                                         |                                                                                                                 |              |                                                                                                                                                                       |                                                                                                                                                                                                                                                                    |
+|                                         | -   Unified Threat Management (UTM) Firewall                                                                    |              | -   [Juniper vSRX](https://cloud.ibm.com/catalog/content/juniper-vsrx-catalog-deploy-1.4-dc1e707c-33dd-4321-b2a5-c22dbf0dd0ee-global)                                 | -   Virtual FW on VSI in the [Transit/Edge VPC](https://cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1)                                                                                                                               |
+|                                         |                                                                                                                 |              |                                                                                                                                                                       |                                                                                                                                                                                                                                                                    |
+|                                         |                                                                                                                 |              | -   [Checkpoint Cloud Guard](https://cloud.ibm.com/catalog/content/checkpoint-iaas-gw-ibm-vpc-1.0.7-9ed8dbde-2931-45f5-a7a7-0c90ce0d2686-global)                      | -   Client preference however recommendation is Fortigate or Juniper.                                                                                                                                                                                              |
+|                                         |                                                                                                                 |              |                                                                                                                                                                       |                                                                                                                                                                                                                                                                    |
+|                                         |                                                                                                                 |              | -   [Palo Alto](https://cloud.ibm.com/catalog/content/ibmcloud-vmseries-1.9-6470816d-562d-4627-86a5-fe3ad4e94b30-global)                                              | -   Fortigate supports native HA configuration                                                                                                                                                                                                                     |
+|                                         |                                                                                                                 |              |                                                                                                                                                                       |                                                                                                                                                                                                                                                                    |
+|                                         |                                                                                                                 |              |                                                                                                                                                                       | -   Fortigate and Juniper both support both IPS & IDS                                                                                                                                                                                                              |
 {: caption="Table 1. Architecture decisions for security" caption-side="bottom"}

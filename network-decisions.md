@@ -15,101 +15,25 @@ keywords:
 # Architecture decisions for network
 {: #network-decisions}
 
-+--------------+---------------+---------------+-----------------------+
-| **           | **            | **Decision**  | **Rationale**         |
-| Architecture | Requirement** |               |                       |
-| decision**   |               |               |                       |
-| Connectivity | Connectivity  | Redundant     | Preferred depending   |
-| from Cloud   | needed        | Direct Link   | on security           |
-| to           | between       | Connect       | requirements. Lower   |
-| enterprise   | client and    | Connections   | cost than DL          |
-|              | IBM Cloud     |               | Dedicated             |
-| Connectivity | Secure,       | P2P VPN       | [VPN                  |
-| from Managed | encrypted     | through VPC   | Gateway](https://clo  |
-| Service      | connectivity  | VPN Gateway   | ud.ibm.com/docs/vpc?t |
-| Providers    | between MSPs  |               | opic=vpc-using-vpn) - |
-|              | and IBM Cloud |               | securely connect      |
-|              |               |               | Virtual Private Cloud |
-|              |               |               | (VPC) to another      |
-|              |               |               | private network       |
-|              |               |               | (site-2-site) for     |
-|              |               |               | management purposes.  |
-|              |               |               |                       |
-|              |               |               | A VPN gateway         |
-|              |               |               | consists of two       |
-|              |               |               | back-end instances    |
-|              |               |               | for high availability |
-|              |               |               | in the same zone      |
-| BYOIP/Edge   | Capability    | -   IBM Cloud | Client can [bring     |
-| Gateway      | needed for    |     VPC       | their own             |
-|              | customer to   |               | subnet](https:/       |
-|              | provide       |   facilitates | /cloud.ibm.com/docs/v |
-|              | isolation,    |     BYOIP     | pc?topic=vpc-configur |
-|              | security and  |               | ing-address-prefixes) |
-|              | edge routing  | -   Edge      | IP address range to a |
-|              | services      |     Gateways: | IBM Cloud VPC         |
-|              |               |     Palo      |                       |
-|              |               |     Alto,     | Edge Gateway is       |
-|              |               |     Fortinet, | client choice based   |
-|              |               |     F5 -      | on requirements       |
-|              |               |     client    |                       |
-|              |               |     choice    |                       |
-|              |               |     based on  |                       |
-|              |               |               |                       |
-|              |               |  requirements |                       |
-| Network      | Ability to    | VPCs and      | Native VPC isolation  |
-| Segmentati   | provide       | subnets       | through the use of    |
-| on/Isolation | network       |               | separate VPCs and     |
-|              | isolation     | Separate      | subnets for prod,     |
-|              | across        | PowerVS LPARs | non-prod environments |
-|              | workloads     |               | and separation of     |
-|              |               |               | workload              |
-|              |               |               |                       |
-|              |               |               | Separate PowerVS      |
-|              |               |               | LPARs                 |
-| Cloud Native | Ability to    | Virtual       | Communicate with IBM  |
-| Connectivity | connect to    | Private       | Cloud services over   |
-| (to cloud    | cloud         | Endpoints     | the private network   |
-| services)    | services over |               | using a virtual       |
-|              | the private   |               | private endpoint      |
-|              | network       |               | (VPE)                 |
-| Cloud        | Connect       | Transit       | Use TGW to connect    |
-| Landing-zone | across        | Gateway       | separate VPCs (Edge), |
-| Connectivity | multiple VPCs |               | Classic (if needed)   |
-|              | and to IBM    | Global        | and PowerVS. Global   |
-| VPC to VPC   | Cloud Classic | Transit       | transit gateway to    |
-|              | environments  | Gateway       | connect to            |
-|              |               |               | environments in other |
-|              |               |               | regions for           |
-|              |               |               | resiliency data       |
-|              |               |               | replication purposes. |
-| Load         | Load          | Cloud         | Public load balancing |
-| Balancing    | balancing     | Internet      | for resiliency needs  |
-| (Public)     | over the      | Services      | as per SAP best       |
-|              | public        | (CIS)         | practices. CIS also   |
-|              | network       |               | provides DDoS         |
-|              | across two    |               | services.             |
-|              | regions in    |               |                       |
-|              | the event of  |               |                       |
-|              | an outage     |               |                       |
-|              | (DR) for      |               |                       |
-|              | failover to   |               |                       |
-|              | the other     |               |                       |
-| Load         | Load          | SAP Web       | The ALB will load     |
-| Balancing    | balancing     | Dispatcher    | balance               |
-| (Private)    | workloads     |               | inter-application     |
-|              | across        | IBM Cloud     | server requests       |
-|              | multiple      | Application   | across Web Dispatcher |
-|              | workload      | Load Balancer | hosts. The ALB is a   |
-|              | instances     | (ALB)         | floating IP with      |
-|              | over the      |               | multiple subnets or   |
-|              | private       |               | servers attached to   |
-|              | network       |               | the backend pool.     |
-| Domain Name  | Ability to    | IBM will      | This is the default   |
-| System (DNS) | resolve DNS   | continue to   | option in the absence |
-|              | names on site | forward/relay | of a specific         |
-|              |               | the DNS to    | customer requirement  |
-|              |               | client DNS    | to manage DNS         |
-|              |               | Servers       |                       |
-|              |               | onsite        |                       |
+| **Architecture decision**                     | **Requirement**                                                                                                            | **Decision**                                                                     | **Rationale**                                                                                                                                                                          |
+|-|-|-|-|
+| Connectivity from Cloud to enterprise         | Connectivity needed between client and IBM Cloud                                                                           | Redundant Direct Link Connect Connections                                        | Preferred depending on security requirements. Lower cost than DL Dedicated                                                                                                             |
+| Connectivity from Managed Service Providers   | Secure, encrypted connectivity between MSPs and IBM Cloud                                                                  | P2P VPN through VPC VPN Gateway                                                  | [VPN Gateway](https://cloud.ibm.com/docs/vpc?topic=vpc-using-vpn) - securely connect Virtual Private Cloud (VPC) to another private network (site-2-site) for management purposes.     |
+|                                               |                                                                                                                            |                                                                                  |                                                                                                                                                                                        |
+|                                               |                                                                                                                            |                                                                                  | A VPN gateway consists of two back-end instances for high availability in the same zone                                                                                                |
+| BYOIP/Edge Gateway                            | Capability needed for customer to provide isolation, security and edge routing services                                    | -   IBM Cloud VPC facilitates BYOIP                                              | Client can [bring their own subnet](https://cloud.ibm.com/docs/vpc?topic=vpc-configuring-address-prefixes) IP address range to a IBM Cloud VPC                                         |
+|                                               |                                                                                                                            |                                                                                  |                                                                                                                                                                                        |
+|                                               |                                                                                                                            | -   Edge Gateways: Palo Alto, Fortinet, F5 - client choice based on requirements | Edge Gateway is client choice based on requirements                                                                                                                                    |
+| Network Segmentation/Isolation                | Ability to provide network isolation across workloads                                                                      | VPCs and subnets                                                                 | Native VPC isolation through the use of separate VPCs and subnets for prod, non-prod environments and separation of workload                                                           |
+|                                               |                                                                                                                            |                                                                                  |                                                                                                                                                                                        |
+|                                               |                                                                                                                            | Separate PowerVS LPARs                                                           | Separate PowerVS LPARs                                                                                                                                                                 |
+| Cloud Native Connectivity (to cloud services) | Ability to connect to cloud services over the private network                                                              | Virtual Private Endpoints                                                        | Communicate with IBM Cloud services over the private network using a virtual private endpoint (VPE)                                                                                    |
+| Cloud Landing-zone Connectivity               | Connect across multiple VPCs and to IBM Cloud Classic environments                                                         | Transit Gateway                                                                  | Use TGW to connect separate VPCs (Edge), Classic (if needed) and PowerVS. Global transit gateway to connect to environments in other regions for resiliency data replication purposes. |
+|                                               |                                                                                                                            |                                                                                  |                                                                                                                                                                                        |
+| VPC to VPC                                    |                                                                                                                            | Global Transit Gateway                                                           |                                                                                                                                                                                        |
+| Load Balancing (Public)                       | Load balancing over the public network across two regions in the event of an outage (DR) for failover to the other region. | Cloud Internet Services (CIS)                                                    | Public load balancing for resiliency needs as per SAP best practices. CIS also provides DDoS services.                                                                                 |
+| Load Balancing (Private)                      | Load balancing workloads across multiple workload instances over the private network                                       | SAP Web Dispatcher                                                               | The ALB will load balance inter-application server requests across Web Dispatcher hosts. The ALB is a floating IP with multiple subnets or servers attached to the backend pool.       |
+|                                               |                                                                                                                            |                                                                                  |                                                                                                                                                                                        |
+|                                               |                                                                                                                            | IBM Cloud Application Load Balancer (ALB)                                        |                                                                                                                                                                                        |
+| Domain Name System (DNS)                      | Ability to resolve DNS names on site                                                                                       | IBM will continue to forward/relay the DNS to client DNS Servers onsite          | This is the default option in the absence of a specific customer requirement to manage DNS                                                                                             |
 {: caption="Table 2. Architecture decisions for network" caption-side="bottom"}
