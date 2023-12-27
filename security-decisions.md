@@ -15,8 +15,8 @@ keywords:
 # Architecture decisions for security
 {: #security-decisions}
 
-|**Architecture decision**|**Requirement**|**Decision** |**Rationale**||
--|-|-|-|
+|**Architecture decision**|**Requirement**|**Decision** |**Rationale**
+|-|-|-|-|
 Primary Storage                         | Ability to encrypt data at rest                                                                                 |PowerVS uses IBM FlashSystem Storage with AES-256 (Advanced Encryption Standard) hardware-based encryption                                                           | Industry-Standard AES-256 encryption as provided by FlashSystem Storage for PowerVS|
 Backup Storage                       | Ability to encrypt backups at rest                                                                              |Cloud Object Storage Encryption                                                                                                                                       | By default, all objects that are stored in IBM Cloud Object Storage are encrypted by using randomly generated keys and an all-or-nothing-transform (AONT)|
 Archive Storage                         |Encryption at rest| Provider managed encryption provided by block storage.                                                                                                                | The file systems associated within any Classic infrastructure is IBM Cloud Block Storage Volume or file storage. Block and File Storage allows for Provider managed encryption (IBM Cloud managed keys) which will be configured by default when storage is setup|
