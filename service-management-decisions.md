@@ -15,7 +15,7 @@ keywords:
 # Architecture decisions for service management
 {: #service management}
 
-| **Architecture decision**   | **Requirement** |**Decision** |                                                                                                                | **Rationale** |
+|**Architecture decision**   |**Requirement** |**Decision** | **Rationale** |
 |-|-|-|-|
 | Monitoring (Application)    |                 | Provide Integration, Exception, Health and System Monitoring                                                                                 |SAP App: SAP FRUN (part of SAP Digital Ops Suite)                                                              | -   Provides templates for monitoring of technical systems including their instances, databases and hosts. \n -   Displays the status of managed objects and detailed drill down to each single metric or event. Shows the history of each metric in the Metric Monitor. \n-   Automatic alert generation when thresholds are violated.|
 |                             |                 |                                                                                                                                              |              | | | Instana                                                                                                        | -   Instana provides additional application performance metrics and automate application performance management for the Web, App, and Database tiers.  Provides data and actionable insights to monitor the applications and automate root-cause analysis. |

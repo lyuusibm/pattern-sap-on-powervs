@@ -15,8 +15,8 @@ keywords:
 # Architecture decisions for storage
 {: #storage-decisions}
 
-| **Architecture decision**         | **Requirement**                                        | **Decision**                                                                                                                                             |                                                                                 | **Rationale**      |
-|-|-|-|-|-|
+| **Architecture decision**         | **Requirement**                                        | **Decision**                                                                                                                                             | **Rationale**      |
+|-|-|-|-|
 | Primary Storage - Production      | Tier 1 - 10 IOPS                                       | Flash storage from IBM FS9000 series devices                                                                                                             | Tier 1 HANA DB on Production                                                    |                    |
 |                                   |                                                        |                                                                                                                                                          |                                                                                 |                    |
 |                                   |                                                        |                                                                                                                                                          | Recommended for large non-HANA DB                                               |                    |
