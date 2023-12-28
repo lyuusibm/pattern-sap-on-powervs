@@ -136,9 +136,9 @@ every 15 minutes.
     Full retained for 30 days.
 
 -   Non-Productions System Monthly full retained for 60 days. Weekly
-    Full retained for 14 days week. Daily incremental retained for 60
+    Full retained for 14 days. Daily incremental retained for 60
     days.
 
 Consider the largest DB size for full backups with room for addition
-growth. Recommend complementing the backup solution with Daily snapshots
+growth. Recommend complementing the backup solution with daily snapshots
 for production.

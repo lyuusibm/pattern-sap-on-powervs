@@ -38,11 +38,11 @@ includes:
 
 -   PowerVM Host CPU Binding (dedicated or shared)
 
-PowerVS custom profiles are for nonproduct development for testing or
+PowerVS custom profiles are for non-production for testing or
 development use only. Custom, non-SAP Certified profiles aren\'t
 intended for production deployments and aren\'t supported or certified
 for SAP production. Custom profiles should not be used to go from a
-nonproduction environment to a production environment.
+non-production environment to a production environment.
 
 There are multiple SAP Certified Power Virtual Sever profiles certified
 by SAP:
@@ -72,7 +72,7 @@ Databases typically experience growth over time so database size and
 expected data growth rates should be taken into consideration when
 planning database deployments.
 
-SAP AnyDB
+**SAP AnyDB**
 
 AnyDB refers to any non-HANA, SAP supported database. SAP supports: IBM
 DB2, Oracle, Microsoft SQL Server, SAP Max DB, SAP ASE and SAP IQ.

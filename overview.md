@@ -31,7 +31,7 @@ for the deployment of SAP on IBM Power Virtual Server (PowerVS) to:
 -   Ensure requirements can be met from performance, system availability
     and security prespectives .
 
-This is a [baseline]{.underline} solution pattern containing the
+This is a baseline solution pattern containing the
 design and architecture decisions for an SAP deployment on IBM Cloud
 Power Virtual Server to meet common requirements. Actual client
 solutions will depend on specific client needs. This document does not
