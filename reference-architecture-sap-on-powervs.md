@@ -29,7 +29,7 @@ content-type: reference-architecture
 {: toc-content-type="reference-architecture"}
 {: toc-version="1.0"}
 
-## Architecture diagram
+## Architecture Diagram
 {: #architecture-diagram}
 
 Figure 1 provides a high-level summary of the use case, a SAP
