@@ -24,12 +24,12 @@ content-type: reference-architecture
 
 {{site.data.keyword.attribute-definition-list}}
 
-# Oracle RAC on Power Virtual Server
-{: #sap-on-vpc}
+# SAP on Power Virtual Server
+{: #sap-on-powervs}
 {: toc-content-type="reference-architecture"}
 {: toc-version="1.0"}
 
-## Architecture diagram
+## Architecture Diagram
 {: #architecture-diagram}
 
 Figure 1 provides a high-level summary of the use case, a SAP
