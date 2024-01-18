@@ -15,7 +15,7 @@ keywords:
 # Migration design
 {: #migration-design}
 
-There are xeveral migration scenarios, the most straight-forward being a
+There are several migration scenarios, the most straight-forward being a
 direct "lift-and-shift" (homogeneous) where the Infrastructure and SAP
 versions remain the same, for example on-prem SAP NetWeaver ABAP 7.0
 running on VMWare to the same environment on cloud. Migration from

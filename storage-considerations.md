@@ -40,9 +40,9 @@ latency increases.
 
 Storage tiers differ and Storage tiers cannot be mixed.
 
-For SAP HANA, only Tier 1 storage is supported and is required.
+For SAP HANA, only Tier 1 storage with 10 IOPS is supported and is required.
 
-For SAP NetWeaver, both Tier 1 and Tier 3 are supported.
+For SAP NetWeaver, both block Tier 1 with 10 IOPS and block Tier 3 with 3 IOPS are supported.
 
 For SAP NetWeaver and SAP AnyDB databases (such as IBM Db2 or Oracle
 DB), Tier 1 (NVMe) is recommended but Tier 3 (SSD) can be used.
@@ -52,7 +52,7 @@ average I/O load, but more importantly the peak IOPS of your storage
 workload.
 
 Client is responsible for backing up data on for PowerVS FlashSystem
-FS9000 storage
+FS9000 storage. Custom Backup solutions using Veeam/Spectrum Protect on Baremetal with local disk for operational and COS for 2nd copy and long term archiving.  Backups over the network will need to be considered for backup windows and restores.
 
 [Other Storage
 Considerations](https://cloud.ibm.com/docs/sap?topic=sap-storage-design-considerations)
