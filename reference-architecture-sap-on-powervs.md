@@ -26,6 +26,8 @@ content-type: reference-architecture
 {: toc-content-type="reference-architecture"}
 {: toc-version="1.0"}
 
+The primary region supports Production workloads on Power Virtual Server. The secondary region supports nonproduction and disaster recovery workloads should the customer have DR requirements. The components deployed to the Edge VPC provide security functions and resource isolation to the IBM Cloud workloads.
+
 Figure 1 illustrates a high level architecture for a single-zone, multi-region deployment on IBM Cloud Power Virtual Server.
 
 ## Architecture Diagram
@@ -33,7 +35,6 @@ Figure 1 illustrates a high level architecture for a single-zone, multi-region d
 
 ![SAP Single-zone, multi-region deployment on IBM Cloud PowerVS](image1.png){: caption="Figure 1. SAP Single-zone, multi-region deployment on IBM Cloud PowerVS" caption-side="bottom"}
 
-The primary region supports Production workloads on PowerVS. The secondary region supports nonproduction and disaster recovery workloads should the customer have DR requirements. The components deployed to the Edge VPC provide security functions and resource isolation to the IBM Cloud workloads.
 
 1. Client network connectivity is accomplished through Direct Link with VPN access for MSPs.
 
