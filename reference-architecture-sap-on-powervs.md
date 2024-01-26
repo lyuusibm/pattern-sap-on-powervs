@@ -26,7 +26,7 @@ content-type: reference-architecture
 {: toc-content-type="reference-architecture"}
 {: toc-version="1.0"}
 
-@Doug -- let's add a short description
+Figure 1 illustrates a high level architecture for a single-zone, multi-region deployment on IBM Cloud Power Virtual Server.
 
 ## Architecture Diagram
 {: #architecture-diagram}
@@ -44,6 +44,8 @@ The primary region supports Production workloads on PowerVS. The secondary regio
 4. Public connectivity also routes through Cloud Internet Services (CIS) which can provide load balancing, failover, and DDoS services, then routes to the edge VPC
 
 5. Global Transit Gateway connecting the PowerVS environment across regions to facilitate replication for DR purposes.
+
+Figure 2 illustrates a detailed architecture for a single-zone, multi-region deployment on IBM Cloud Power Virtual Server.
 
 ![illustrates a detailed network and component architecture for a
 single-zone, multi-region deployment to facilitate disaster recovery](image2.png){: caption="Figure 2. A single-zone, multi-region deployment to facilitate disaster recovery" caption-side="bottom"}
@@ -94,7 +96,7 @@ domains, which are technology-agnostic architectural areas that need
 to be considered for any enterprise solution. It can be used as a guide
 to make the necessary design and component choices to ensure the
 applicable requirements for each aspect and domain have been
-considered. 
+considered.
 
 ![domains that are covered in this solution](image3.png){: caption="Figure 3. Domains that are covered in this solution" caption-side="bottom"}
 
