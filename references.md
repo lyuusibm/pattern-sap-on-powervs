@@ -15,7 +15,7 @@ keywords:
 # References
 {: #references}
 
-1. IBM Cloud for SAP](/docs/sap?topic=sap-get-started)
+1. [IBM Cloud for SAP](/docs/sap?topic=sap-get-started)
 
 2. [IBM Power Systems Infrastructure environment introduction](/docs/sap?topic=sap-power-env-introduction)
 
