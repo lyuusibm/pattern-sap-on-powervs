@@ -1,0 +1,37 @@
+{
+  "title": "Name of architecture",
+  "lastupdated": "2023-04-06",
+  "introduction": "This is a description of what the user will be able to understand in this architecture pattern.",
+  "section_architectures": [
+    {
+      "title": "Title of reference architecture",
+      "href": "/docs/acme-test?topic=acme-test-vpc-architecture",
+      "deployable": true
+    },
+    {
+      "title": "Title of reference architecture",
+      "href": "/docs/acme-test?topic=acme-test-vpc-architecture",
+      "deployable": true
+    }
+  ],
+  "section_diagram": {
+    "description": "This is an overall diagram.",
+    "diagram": "/images/architecture-overview.svg",
+    "caption": "A something something that does something."
+  },
+  "section_video": {
+    "description": "Learn all about this architecture.",
+    "href": "https://www.youtube.com/embed/HzugDzl2cfg?modestbranding=1",
+    "script": "/docs/acme-test?topic=acme-test-video-script"
+  },
+  "section_training": [
+    {
+      "title": "Title of training course",
+      "href": "https://developer.ibm.com/solutions/security/courses/"
+    },
+    {
+      "title": "Title of training course",
+      "href": "https://developer.ibm.com/solutions/security/courses/"
+    }
+  ]
+}

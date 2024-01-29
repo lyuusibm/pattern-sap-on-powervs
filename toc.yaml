@@ -1,0 +1,66 @@
+#  Name your file `toc.yaml`
+#  Make sure you include all nav file coding requirements, as defined in https://test.cloud.ibm.com/docs/writing?topic=writing-code-nav
+#  Anything with a fully qualified URL with `http` or `https` will get an external link icon added to the nav entry
+---
+toc:
+  properties:
+    subcollection: pattern-sap-on-powervs
+    #industry: industry-value
+    #use-case: use-case-value
+    #compliance: compliance-value
+    audience: solution
+    content-type: deployment
+    href: /docs/pattern-sap-on-powervs
+    path: pattern-sap-on-powervs
+    description: SAP PowerVS Architecture Pattern
+    label: SAP on Power Virtual Server
+
+  entries:
+  - navgroup:
+      id: overview
+      topics:
+      - overview.md
+
+  - navgroup:
+      id: architecture
+      topics:
+      - reference-architecture-sap-on-powervs.md
+
+  - navgroup:
+      id: plan
+      topics:
+      - topicgroup:
+          label: Design considerations
+          topics:
+          - topic: compute-considerations.md
+            navtitle: Compute
+          - topic: storage-considerations.md
+            navtitle: Storage
+          - topic: network-considerations.md
+            navtitle: Network
+          - topic: security-considerations.md
+            navtitle: Security
+          - topic: resiliency-considerations.md
+            navtitle: Resiliency
+          - topic: migration-considerations.md
+            navtitle: Migration
+      - topicgroup:
+          label: Architecture decisions
+          topics:
+          - topic: compute-decisions.md
+            navtitle: Compute
+          - topic: storage-decisions.md
+            navtitle: Storage
+          - topic: network-decisions.md
+            navtitle: Network
+          - topic: security-decisions.md
+            navtitle: Security
+          - topic: resiliency-decisions.md
+            navtitle: Resiliency
+          - topic: service-management-decisions.md
+            navtitle: Service Management
+
+  - navgroup:
+      id: reference
+      topics:
+      - references.md
