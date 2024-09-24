@@ -26,9 +26,7 @@ content-type: reference-architecture
 {: toc-content-type="reference-architecture"}
 {: toc-version="1.0"}
 
-The primary region supports Production workloads on Power Virtual Server. The secondary region supports nonproduction and disaster recovery workloads should the customer have DR requirements. The components deployed to the Edge VPC provide security functions and resource isolation to the IBM Cloud workloads.
-
-Figure 1 illustrates a high level architecture for a single-zone, multi-region deployment on IBM Cloud Power Virtual Server.
+Figure 1 illustrates a high-level summary of the Use Case, an SAP Single-zone, multi-region deployment on IBM Cloud PowerVS.  The Primary Region supports regular SAP workloads on PowerVS. The Secondary Region supports Disaster Recovery systems should the customer have DR requirements . As an alternative, in case of a Cost Optimized DR solution, the Primary Region could support Production workloads on PowerVS while the Secondary Region could support non-Production and Disaster Recovery workloads. The components deployed to the VPC Landing Zone provide security functions and resource isolation to the IBM Cloud workloads.
 
 ## Architecture Diagram
 {: #architecture-diagram}
@@ -36,15 +34,12 @@ Figure 1 illustrates a high level architecture for a single-zone, multi-region d
 ![SAP Single-zone, multi-region deployment on IBM Cloud PowerVS](image1.png){: caption="Figure 1. SAP Single-zone, multi-region deployment on IBM Cloud PowerVS" caption-side="bottom"}
 
 
-1. Client network connectivity is accomplished through Direct Link with VPN access for MSPs.
-
-2. An Edge VPC is deployed which contains routing and security functions.
-
-3. Transit Gateway to Power Virtual Server hosting the SAP application and databases
-
-4. Public connectivity also routes through Cloud Internet Services (CIS) which can provide load balancing, failover, and DDoS services, then routes to the edge VPC
-
-5. Global Transit Gateway connecting the PowerVS environment across regions to facilitate replication for DR purposes.
+1.	Client network connectivity from on-premises is accomplished through Direct Link access.
+2.	Management network connectivity is accomplished through site-to-site VPN.
+3.	A VPC Landing Zone (Edge VPC) is deployed which contains routing and security functions and optional management components for backup, monitoring and user management.
+4.	Transit Gateway to Power Virtual Server hosting the SAP application and database(s)
+5.	Public connectivity also routes through Cloud Internet Services (CIS) which can provide global load balancing, failover and DDoS services, then routes to the VPC Landing Zone
+6.	Global Transit Gateway connecting the PowerVS environment across regions to facilitate replication for DR purposes.
 
 
 
@@ -56,27 +51,20 @@ single-zone, multi-region deployment to facilitate disaster recovery](image2.png
 ### Architecture description
 {: #architecture-description}
 
-1. Two separate IBM Cloud regions, one containing production, the other containing both nonproduction and DR.
+1.	Two separate IBM Cloud regions, one for Primary workload and the other for Disaster Recovery. If Cost Optimized Disaster Recovery is considered, some Non Production systems may share the same compute with Disaster Recovery systems. 
+2.	Enterprise network connectivity from On-premise to IBM Cloud is accomplished through Direct Links. 
+3.	A VPC Landing Zone (Edge VPC) is deployed which contains routing and security functions.  For security purposes, all ingress and egress traffic will route through the VPC Landing Zone.  It contains a Bastion host (jump), Firewalls providing advanced security functions and the SAP router and SAP Web Dispatcher.  
+4.	Besides Power Workloads in Power workspace, x86 workloads may be implemented in a Workload VPC. 
+5.	To backup Power workloads, Secure Automated Backup with Compass by Cobalt Iron is implemented. The private end point for this backup service is located in VPC.
+6.	VPCs are connected to Power workspace through a local Transit Gateway 
+7.	Public connectivity routes through Cloud Internet Services which can provide global load balancing, failover, and DDoS services, then routes to the VPC Landing Zone
+8.	SAP workloads may be hosted on redundant SAP certified LPARS in PowerVS 
+9.	SAP Application and SAP HANA should be placed on SAP certified LPARs within the zone with proximity considered
+10.	Virtual Private endpoints in VPCs are used to provide connectivity to cloud native services 
+11.	Global Transit Gateway connecting Power workspace across regions for data replication purposes between the two regions.
+12.	To achieve 99.95% infrastructure availability, multiple LPARs in the same placement group within a zone can be implemented
 
-2. Client network connectivity is accomplished through Direct Links to each region with VPN access for MSPs.
 
-3. An Edge VPC is deployed which contains routing and security functions. For security purposes, all ingress and egress traffic will route through the Edge VPC. It contains an sFTP server, Bastion host (jump), Firewalls providing advanced security functions and the SAP router and Web Dispatcher.
-
-4. The Edge VPC is connected to PowerVS through a local Transit Gateway and hosts the SAP application and databases.
-
-5. Public connectivity routes through Cloud Internet services that can provide load balancing, failover, and DDoS services, then routes to the edge VPC
-
-6. PowerVS contains SAP Application components that are hosted on redundant SAP certified LPARS in an [SAP Scale-out](/docs/sap?topic=sap-refarch-hana-scaleout#network-layout-for-scale-out-configurations-2) environment.
-
-7. SAP HANA is hosted on separate SAP certified LPARs in the same zone, by using local Tier 1 storage.
-
-8. Virtual Private endpoints are used to provide connectivity to cloud native services
-
-9. Global Transit Gateway connecting PowerVS across regions for data replication purposes between the two regions.
-
-10. Multiple LPARs are used to provide 99.95% availability within a zone
-
-11. Bare Metals in classic to provide backups by using IBM Storage Protect
 
 ## Design scope
 {: #design-scope}
@@ -84,12 +72,12 @@ single-zone, multi-region deployment to facilitate disaster recovery](image2.png
 Design decisions that need to be considered for an end-2-end SAP on
 PowerVS deployment and which are covered in this accelerator include:
 
-- **Compute:** Bare Metal and Virtual Servers
+- **Compute:** Virtual Servers
 - **Storage:** Primary, Backup, and Archive
 - **Networking:** Enterprise Connectivity, Edge Gateways, Segmentation and Isolation, Cloud Native Connectivity and Load Balancing
 - **Security:** Data, Identity and Access Management, Infrastructure and Endpoint, Threat Detection and Response
 - **Resiliency:** Backup and Restore, Disaster Recovery, High Availability
-- **Service Management:** Monitoring, Logging, Alerting, Management/Orchestration
+- **Service Management:** Monitoring, Logging, Alerting, Automated Deployment, Management/Orchestration
 
 The Architecture Framework, described in [Introduction to the Architecture
 Framework](/docs/architecture-framework?topic=architecture-framework-intro),
