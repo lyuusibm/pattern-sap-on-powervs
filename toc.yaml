@@ -61,6 +61,11 @@ toc:
             navtitle: Service Management
 
   - navgroup:
+      id: deployment-guide
+      topics:
+      - deploy.md
+      
+  - navgroup:
       id: reference
       topics:
       - references.md
